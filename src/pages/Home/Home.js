@@ -29,7 +29,7 @@ function Home() {
   const renderFilm = () =>
     listFilm.map((item, index) => (
       <SwiperSlide key={index}>
-        <CardFilmV2 film={item} />
+        <CardFilm film={item} />
       </SwiperSlide>
     ));
   return (
