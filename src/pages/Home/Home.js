@@ -64,7 +64,7 @@ function Home() {
       <button></button>
       <Swiper
         style={{
-          width: "80%",
+          width: "80  %",
           padding: "25px",
         }}
         slidesPerView={4}
