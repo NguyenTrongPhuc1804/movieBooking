@@ -1,23 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
-
+import logo from "./logo.svg";
+import "./index.css";
+import "./App.css";
+import _ from "lodash";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { increment } from "./redux/reducer/counterSlice";
+import { Route, Routes, Swicth, BrowserRouter } from "react-router-dom";
+import HomeTemplate from "./templates/HomeTemplate/HomeTemplate";
+import Home from "./pages/Home/Home";
 function App() {
+  const dispatch = useDispatch();
+  const { value } = useSelector((state) => state.counterSlice);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />}></Route>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
