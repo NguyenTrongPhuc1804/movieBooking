@@ -62,9 +62,10 @@ export const ManagementFilmSlice = createSlice({
 // getListFilm
 
 export const getListFilm = createAsyncThunk("film/getListFilm", async () => {
-  const { data } = await repuestMovie.get(
-    "QuanLyPhim/LayDanhSachPhim?maNhom=GP01"
-  );
+  const { data } = await repuestMovie
+    .get
+    // "QuanLyPhim/LayDanhSachPhim?maNhom=GP00"
+    ();
   return data;
 });
 

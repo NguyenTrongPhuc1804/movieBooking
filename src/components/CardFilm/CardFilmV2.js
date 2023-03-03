@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 
 export default function CardFilmV2(props) {
-  const film = useSelector((state) => state.ManagementFilmSlicelistFilm[0]);
+  const { film } = props;
   return (
     <div className="w-full max-w-sm overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800">
       <img

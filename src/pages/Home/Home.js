@@ -18,6 +18,7 @@ import {
   setPhimSapChieu,
 } from "../../redux/reducer/ManagementFilmSlice";
 import { getOPhim } from "../../redux/reducer/CarouselSlice";
+import CardFilmV2 from "../../components/CardFilm/CardFilmV2";
 function Home() {
   const dispatch = useDispatch();
   const { listFilm } = useSelector((state) => state.ManagementFilmSlice);
@@ -28,7 +29,7 @@ function Home() {
   const renderFilm = () =>
     listFilm.map((item, index) => (
       <SwiperSlide key={index}>
-        <CardFilm film={item} />
+        <CardFilmV2 film={item} />
       </SwiperSlide>
     ));
   return (
@@ -64,7 +65,7 @@ function Home() {
       <button></button>
       <Swiper
         style={{
-          width: "80  %",
+          width: "80%",
           padding: "25px",
         }}
         slidesPerView={4}
