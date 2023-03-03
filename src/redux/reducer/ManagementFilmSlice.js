@@ -3,23 +3,7 @@ import { Await } from "react-router-dom";
 import repuestMovie from "../../services/servicesReques";
 
 const initialState = {
-  listFilm: [
-    {
-      maPhim: 10894,
-      tenPhim: "Nhà Kho Chết Chóc",
-      biDanh: "nha-kho-chet-choc",
-      trailer: "https://www.youtube.com/embed/UzudqOzRfmU",
-      hinhAnh:
-        "http://movieapi.cyberlearn.vn/hinhanh/nha-kho-chet-choc_gp00.jpeg",
-      moTa: "Một gia đình chuyển đến một nơi yên tĩnh và biệt lập, nhưng ác mộng lại ập tới khi người vợ nghe thấy những điều quỷ dị trong nhà kho, và ngày càng tồi tệ đến mức họ khó có thể phân biệt được đâu là mơ và đâu là thực.",
-      maNhom: "GP00",
-      ngayKhoiChieu: "2023-02-26T15:40:02.26",
-      danhGia: 6,
-      hot: false,
-      dangChieu: false,
-      sapChieu: true,
-    },
-  ],
+  listFilm: [],
   listFilmDefault: [],
   dangChieu: true,
   sapChieu: true,
@@ -62,10 +46,9 @@ export const ManagementFilmSlice = createSlice({
 // getListFilm
 
 export const getListFilm = createAsyncThunk("film/getListFilm", async () => {
-  const { data } = await repuestMovie
-    .get
-    // "QuanLyPhim/LayDanhSachPhim?maNhom=GP00"
-    ();
+  const { data } = await repuestMovie.get(
+    "QuanLyPhim/LayDanhSachPhim?maNhom=GP00"
+  );
   return data;
 });
 
