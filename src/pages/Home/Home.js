@@ -43,12 +43,12 @@ function Home() {
     <div className="bg-[#3f3f3f]">
       <Header />
       <Carousel />
-      <div className="text-left px-8 sm:text-center text-sm sm:text-xl mt-6 w-full">
+      <div className=" px-8 text-center text-xs  sm:text-xl mt-6 w-full">
         <button
           onClick={() => {
             dispatch(setAllFilm());
           }}
-          className="p-2 m-2 hover:bg-[#ff7f50] text-white  transition lg:px-4 md:mx-2 border border-solid border-[#ff7f50] focus:bg-[#ff7f50] text-[#ff7f50] rounded bg-current-indigo-600"
+          className="p-2 m-2 block mx-auto hover:bg-[#ff7f50] text-white  transition lg:px-4 md:mx-2 border border-solid border-[#ff7f50] focus:bg-[#ff7f50] text-[#ff7f50] rounded bg-current-indigo-600"
         >
           Tất cả phim
         </button>
