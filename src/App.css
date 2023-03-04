@@ -117,7 +117,7 @@ body {
   margin: 0;
   padding: 0 0 10px 0;
   color: #fff;
-  font-size: 22px;
+  font-size: 16px;
   font-weight: bold;
 }
 
@@ -174,4 +174,7 @@ body {
 
 .icon + .icon {
   padding-left: 10px;
+}
+.ant-menu-submenu-title {
+  padding: 30px;
 }

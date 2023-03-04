@@ -35,7 +35,7 @@ function Header() {
                 to="/"
                 className={({ isActive }) =>
                   isActive
-                    ? "p-2 lg:px-4 md:mx-2 text-white rounded bg-indigo-600"
+                    ? "p-2 lg:px-4 md:mx-2 text-white rounded bg-[#ff7f50]"
                     : "p-2 lg:px-4 md:mx-2  rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300"
                 }
               >
@@ -45,7 +45,7 @@ function Header() {
                 to="/2"
                 className={({ isActive }) =>
                   isActive
-                    ? "p-2 lg:px-4 md:mx-2 text-white rounded bg-indigo-600"
+                    ? "p-2 lg:px-4 md:mx-2 text-white rounded bg-[#ff7f50]"
                     : "p-2 lg:px-4 md:mx-2  rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300"
                 }
               >
@@ -55,7 +55,7 @@ function Header() {
                 to="/2"
                 className={({ isActive }) =>
                   isActive
-                    ? "p-2 lg:px-4 md:mx-2 text-white rounded bg-indigo-600"
+                    ? "p-2 lg:px-4 md:mx-2 text-white rounded bg-[#ff7f50]"
                     : "p-2 lg:px-4 md:mx-2  rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300"
                 }
               >
@@ -63,13 +63,13 @@ function Header() {
               </NavLink>
               <a
                 href="#"
-                className="p-2 lg:px-4 md:mx-2  text-center border border-transparent rounded hover:bg-indigo-100 hover:text-indigo-700 transition-colors duration-300"
+                className="p-2 lg:px-4 md:mx-2  text-center border border-transparent rounded hover:bg-indigo-100 hover:text-[#ff7f50] transition-colors duration-300"
               >
                 Login
               </a>
               <a
                 href="#"
-                className="p-2 lg:px-4 md:mx-2  text-center border border-solid border-indigo-600 rounded hover:bg-indigo-600 hover:text-white transition-colors duration-300 mt-1 md:mt-0 md:ml-1"
+                className="p-2 lg:px-4 md:mx-2  text-center border border-solid border-[#ff7f50] rounded hover:bg-[#ff7f50] hover:text-white transition-colors duration-300 mt-1 md:mt-0 md:ml-1"
               >
                 Signup
               </a>

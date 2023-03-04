@@ -1,6 +1,6 @@
 import axios from "axios";
 import { DOMAIN } from "../util/setting/config";
-const repuestMovie = axios.create({
+const requestMovie = axios.create({
   baseURL: DOMAIN,
 });
-export default repuestMovie;
+export default requestMovie;

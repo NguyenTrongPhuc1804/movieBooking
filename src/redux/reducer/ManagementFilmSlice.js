@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { Await } from "react-router-dom";
+import requestMovie from "../../services/servicesReques";
 import repuestMovie from "../../services/servicesReques";
 
 const initialState = {
@@ -40,13 +41,17 @@ export const ManagementFilmSlice = createSlice({
     builder.addCase(getListFilm.pending, (state) => {
       state.isLoading = true;
     });
+    builder.addCase(getListFilm.rejected, (state, action) => {
+      state.isLoading = false;
+      state.errorMessage = action.payload.message;
+    });
   },
 });
 
 // getListFilm
 
 export const getListFilm = createAsyncThunk("film/getListFilm", async () => {
-  const { data } = await repuestMovie.get(
+  const { data } = await requestMovie.get(
     "QuanLyPhim/LayDanhSachPhim?maNhom=GP00"
   );
   return data;

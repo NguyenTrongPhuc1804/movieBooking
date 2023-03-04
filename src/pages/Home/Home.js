@@ -19,13 +19,20 @@ import {
 } from "../../redux/reducer/ManagementFilmSlice";
 import { getOPhim } from "../../redux/reducer/CarouselSlice";
 import CardFilmV2 from "../../components/CardFilm/CardFilmV2";
+import { getListInfoCinema } from "../../redux/reducer/ManagementCinemaSilce";
+import ResponsiveDivice from "../../util/setting/responsiveDivice";
 function Home() {
   const dispatch = useDispatch();
+
   const { listFilm } = useSelector((state) => state.ManagementFilmSlice);
-  const { oPhim } = useSelector((state) => state.CaurouselSlice);
+  const { listCinema } = useSelector(
+    (state) => state.ManagementInfoCinemaSlice
+  );
   useEffect(() => {
     dispatch(getListFilm("asd"));
+    dispatch(getListInfoCinema());
   }, []);
+
   const renderFilm = () =>
     listFilm.map((item, index) => (
       <SwiperSlide key={index}>
@@ -36,12 +43,12 @@ function Home() {
     <div className="bg-[#3f3f3f]">
       <Header />
       <Carousel />
-      <div className="text-center mt-6 w-full">
+      <div className="text-left px-8 sm:text-center text-xl mt-6 w-full">
         <button
           onClick={() => {
             dispatch(setAllFilm());
           }}
-          className="p-2 m-2 lg:px-4 md:mx-2 border border-solid border-indigo-600 focus:bg-indigo-600 text-white rounded bg-current-indigo-600"
+          className="p-2 m-2 hover:bg-[#ff7f50] text-white  transition lg:px-4 md:mx-2 border border-solid border-[#ff7f50] focus:bg-[#ff7f50] text-[#ff7f50] rounded bg-current-indigo-600"
         >
           Tất cả phim
         </button>
@@ -49,7 +56,7 @@ function Home() {
           onClick={() => {
             dispatch(setPhimSapChieu());
           }}
-          className="p-2 m-2 lg:px-4 md:mx-2 border border-solid border-indigo-600 focus:bg-indigo-600 text-white rounded bg-current-indigo-600"
+          className="p-2 m-2  hover:bg-[#ff7f50] text-white  transition lg:px-4 md:mx-2 border border-solid border-[#ff7f50] focus:bg-[#ff7f50] text-[#ff7f50] rounded bg-current-indigo-600"
         >
           Phim sắp chiếu
         </button>
@@ -57,7 +64,7 @@ function Home() {
           onClick={() => {
             dispatch(setPhimDangChieu());
           }}
-          className="p-2 m-2 focus:bg-indigo-600 lg:px-4 md:mx-2 text-white text-center border border-solid border-indigo-600 rounded hover:bg-indigo-600 hover:text-white transition-colors duration-300 mt-1 md:mt-0 md:ml-1"
+          className="p-2 m-2 focus:bg-[#ff7f50] transition lg:px-4 md:mx-2 text-[#ff7f50] text-center border border-solid border-[#ff7f50] rounded hover:bg-[#ff7f50] text-white  transition-colors duration-300 mt-1 md:mt-0 md:ml-1"
         >
           Phim đang chiếu
         </button>
@@ -72,9 +79,10 @@ function Home() {
         breakpoints={{
           200: {
             centeredSlides: false,
-            slidesPerView: 1.2,
+
+            slidesPerView: 1,
             grid: {
-              rows: 3,
+              rows: 2,
               fill: "row",
             },
           },
@@ -85,7 +93,7 @@ function Home() {
             slidesPerView: 2.2,
           },
           1024: {
-            slidesPerView: 4.2,
+            slidesPerView: 5,
           },
         }}
         grid={{
@@ -105,16 +113,17 @@ function Home() {
           dynamicBullets: true,
         }}
         modules={[Grid, Pagination, Navigation, Autoplay]}
-        className="mySwiper"
+        className="mySwiper "
       >
         {renderFilm()}
       </Swiper>
 
-      <HomeMenu />
+      <HomeMenu listInfoCinema={listCinema} />
       <div className="">
         <Outlet />
       </div>
       <Footer />
+      <ResponsiveDivice />
     </div>
   );
 }

@@ -18,15 +18,15 @@ export default function CardFilm(props) {
         <div className="card__category">
           {film.dangChieu ? <span>đang chiếu</span> : <span>sắp chiếu</span>}
         </div>
-        <h2 className="text-sm card__title truncate ... text-white">
+        <h3 className="text-sm card__title truncate ... text-white">
           {film.tenPhim}
-        </h2>
-        <button className="mt-3 bg-transparent hover:bg-[#ff7f50] text-[#ff7f50] font-semibold hover:text-white py-2 px-4 border border-[#ff7f50] hover:border-transparent rounded">
+        </h3>
+        <button className="mt-3 w-full bg-transparent hover:bg-[#ff7f50] text-[#ff7f50] font-semibold hover:text-white py-2 px-4 border border-[#ff7f50] hover:border-transparent rounded">
           Đặt vé
         </button>
         <p className="card__description">
-          {film.moTa.length > 100 ? (
-            <span>{film.moTa.slice(0, 100)}...</span>
+          {film.moTa.length > 80 ? (
+            <span>{film.moTa.slice(0, 80)}...</span>
           ) : (
             <span>{film.moTa}</span>
           )}

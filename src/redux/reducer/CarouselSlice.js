@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import requestMovie from "../../services/servicesReques";
 import repuestMovie from "../../services/servicesReques";
 
 export const CaurouselSlice = createSlice({
@@ -25,7 +26,7 @@ export const CaurouselSlice = createSlice({
 });
 // get banner thunk
 export const getBanner = createAsyncThunk("banner/GetBanner", async () => {
-  const { data } = await repuestMovie.get("QuanLyPhim/LayDanhSachBanner/");
+  const { data } = await requestMovie.get("QuanLyPhim/LayDanhSachBanner/");
   return data;
 });
 
