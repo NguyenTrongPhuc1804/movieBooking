@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Button, Dropdown, Menu, Radio, Space, Tabs } from "antd";
 import { useMediaQuery } from "react-responsive";
 import { MailOutlined, SettingOutlined } from "@ant-design/icons";
+import { NavLink } from "react-router-dom";
+import moment from "moment/moment";
+import { get } from "lodash";
+// import moment from "moment";
 function HomeMenu(props) {
   // reposnive
 
@@ -9,58 +13,14 @@ function HomeMenu(props) {
     query: "(max-device-width: 480px)",
   });
   const [isMobile, setIsMobile] = useState("");
-  useEffect(() => {
-    if (isMobileDevice) {
-      setIsMobile("top");
-    } else {
-      setIsMobile("left");
-    }
-  }, []);
 
   const { listInfoCinema } = props;
   const [tabPosition, setTabPosition] = useState("left");
+
+  // Menu responsive
   const changeTabPosition = (e) => {
     console.log(e);
   };
-
-  const items = [
-    {
-      key: "1",
-      label: (
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://www.antgroup.com"
-        >
-          1st menu item
-        </a>
-      ),
-    },
-    {
-      key: "2",
-      label: (
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://www.aliyun.com"
-        >
-          2nd menu item
-        </a>
-      ),
-    },
-    {
-      key: "3",
-      label: (
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://www.luohanacademy.com"
-        >
-          3rd menu item
-        </a>
-      ),
-    },
-  ];
   const getItem = (label, key, icon, children, type) => {
     return {
       key,
@@ -73,6 +33,60 @@ function HomeMenu(props) {
   const onClick = (e) => {
     console.log("click ", e);
   };
+
+  // hool
+  useEffect(() => {
+    if (isMobileDevice) {
+      setIsMobile("top");
+    } else {
+      setIsMobile("left");
+    }
+  }, []);
+
+  const renderFilm = (rap) => {
+    return rap.danhSachPhim.map((film, idx) => (
+      <div
+        key={idx}
+        className=" mb-4 pb-4 text-white flex border-b-2 rounded-md"
+      >
+        <div
+          style={{
+            backgroundImage: `url(${film.hinhAnh})`,
+          }}
+          className="w-[60px] h-[60px] bg-cover"
+        >
+          {/* <img
+            className="w-[100%] h-[100%] rounded-lg "
+            src={film.hinhAnh}
+            alt=""
+          /> */}
+        </div>
+
+        <div className="ml-2">
+          <h1 className="text-lg mb-1 truncate ...">{film.tenPhim}</h1>
+          {film.hot ? (
+            <span className="px-3 py-1 rounded-md text-white bg-orange-400">
+              Hot
+            </span>
+          ) : (
+            <span className="px-3 py-1 rounded-md text-white bg-[#1d4ed8]">
+              New
+            </span>
+          )}
+          <div className="grid grid-cols-4 lg:grid-cols-8 text-xs gap-2 mt-4 ">
+            {film.lstLichChieuTheoPhim.map((time, idx) => (
+              <NavLink
+                key={idx}
+                className="border-[1px] border-[#ffffff6e] p-[5px] rounded-md"
+              >
+                {moment(time.ngayChieuGioChieu).format("hh:mm A")}
+              </NavLink>
+            ))}
+          </div>
+        </div>
+      </div>
+    ));
+  };
   const renderTabsCinema = (cumRap) => {
     console.log(cumRap.lstCumRap);
 
@@ -80,17 +94,65 @@ function HomeMenu(props) {
       const items = cumRap.lstCumRap.map((rap, idx) =>
         getItem(
           <div className="">
-            <h1 style={{ lineHeight: "20px" }}>{rap.tenCumRap}</h1>
-            <h1 style={{ lineHeight: "20px", color: "#ff7f50" }}>Chi tiết</h1>
+            <h1 className="truncate ..." style={{ lineHeight: "20px" }}>
+              {rap.tenCumRap}
+            </h1>
+            <h1
+              className="truncate ..."
+              style={{ lineHeight: "20px", color: "#ff7f50" }}
+            >
+              {rap.diaChi}
+            </h1>
           </div>,
 
           rap.maCumRap,
           <img
             src={rap.hinhAnh}
             className="h-[45px] w-[45px] rounded-xl"
+            alt=""
           ></img>,
           rap.danhSachPhim.map((film, idx) =>
-            getItem(film.tenPhim, film.maPhim, null)
+            getItem(
+              <div className="flex ">
+                <img className="w-[50px] h-[50px]" src={film.hinhAnh} alt="" />
+                <div className="ml-2">
+                  <p className="leading-none">{film.tenPhim}</p>
+                  {film.hot ? (
+                    <span className="px-3 py-1 mt-[-5px] rounded-md text-white bg-orange-400">
+                      Hot
+                    </span>
+                  ) : (
+                    <span className="px-3 py-1 mt-[-5px] rounded-md text-white bg-[#1d4ed8]">
+                      New
+                    </span>
+                  )}
+                </div>
+              </div>,
+              film.maPhim,
+              null,
+              film.lstLichChieuTheoPhim.map((time, idx) =>
+                getItem(
+                  <div className="flex border-[1px] border-[#ffffff6e] p-[5px] rounded-md">
+                    <p>{time.tenRap}</p>:
+                    <NavLink to="/" className=" ml-2" key={idx}>
+                      {moment(time.ngayChieuGioChieu).format("hh:mm A")}
+                    </NavLink>
+                  </div>,
+                  idx,
+                  null
+                )
+              )
+
+              // film.lstLichChieuTheoPhim.map((showTime, idx) =>
+              //   getItem(
+              //     <p className="text-white">
+              //       {moment(showTime.tenRap).format("hh:mm A")}
+              //     </p>,
+              //     showTime.maLichChieu,
+              //     null
+              //   )
+              // )
+            )
           )
         )
       );
@@ -112,6 +174,7 @@ function HomeMenu(props) {
     } else {
       return (
         <Tabs
+          type="card"
           // onChange={changeTabPosition}
           tabPosition={tabPosition}
           items={cumRap.lstCumRap.map((rap, i) => {
@@ -120,18 +183,26 @@ function HomeMenu(props) {
                 <div className="flex">
                   <img
                     key={i}
-                    className="h-[40px] w-[40px] rounded-lg"
+                    className="h-[50px] w-[50px] rounded-lg"
                     src={rap.hinhAnh}
                     alt=""
                   />
-                  <div className="ml-2">
-                    <p className="text-white ">{rap.tenCumRap}</p>
-                    <p className="text-orange-400 text-left ">Chi tiết</p>
+                  <div className="ml-2 text-left w-[100px] lg:w-[400px]">
+                    <p className="text-white text-lg leading-none mb-3 truncate ...">
+                      {rap.tenCumRap}
+                    </p>
+                    <p className="text-orange-400 leading-none text-left truncate ...">
+                      {rap.diaChi}
+                    </p>
                   </div>
                 </div>
               ),
               key: i,
-              children: `${rap.diaChi}`,
+              children: (
+                <div className="h-[500px] custom-bar  overflow-y-scroll">
+                  {renderFilm(rap)}
+                </div>
+              ),
             };
           })}
         />
@@ -150,7 +221,7 @@ function HomeMenu(props) {
             label: (
               <img
                 key={i}
-                className="h-[40px] w-[40px] rounded-full"
+                className="h-[50px] w-[50px] rounded-full"
                 src={rap.logo}
                 alt=""
               />

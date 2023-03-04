@@ -43,7 +43,7 @@ function Home() {
     <div className="bg-[#3f3f3f]">
       <Header />
       <Carousel />
-      <div className="text-left px-8 sm:text-center text-xl mt-6 w-full">
+      <div className="text-left px-8 sm:text-center text-sm sm:text-xl mt-6 w-full">
         <button
           onClick={() => {
             dispatch(setAllFilm());
@@ -123,7 +123,6 @@ function Home() {
         <Outlet />
       </div>
       <Footer />
-      <ResponsiveDivice />
     </div>
   );
 }
