@@ -3,6 +3,7 @@ import requestMovie from "../../services/servicesReques";
 
 const initialState = {
   listCinema: [],
+  filmDetail: {},
 };
 
 export const ManagementInfoCinemaSlice = createSlice({
@@ -15,9 +16,12 @@ export const ManagementInfoCinemaSlice = createSlice({
     builder.addCase(getListInfoCinema.fulfilled, (state, action) => {
       state.listCinema = action.payload.content;
     });
+    builder.addCase(getFilmDetail.fulfilled, (state, action) => {
+      state.filmDetail = action.payload.content;
+    });
   },
 });
-
+// get list cinema
 export const getListInfoCinema = createAsyncThunk(
   "cinema/getlistCinema",
   async () => {
@@ -27,7 +31,16 @@ export const getListInfoCinema = createAsyncThunk(
     return data;
   }
 );
-
+// get film detail
+export const getFilmDetail = createAsyncThunk(
+  "cinema/getFilmDetail",
+  async (idFilm) => {
+    const { data } = await requestMovie(
+      `QuanLyRap/LayThongTinLichChieuPhim?MaPhim=${idFilm}`
+    );
+    return data;
+  }
+);
 export const { reducerName } = ManagementInfoCinemaSlice.actions;
 
 export default ManagementInfoCinemaSlice.reducer;

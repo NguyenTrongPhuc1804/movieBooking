@@ -1,0 +1,177 @@
+import { Menu, Rate, Tabs } from "antd";
+import moment from "moment";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useMediaQuery } from "react-responsive";
+import { NavLink, useParams } from "react-router-dom";
+import { getFilmDetail } from "../../redux/reducer/ManagementCinemaSilce";
+import "./rating.css";
+function Detail(props) {
+  const isMobileDevice = useMediaQuery({
+    query: "(max-device-width: 480px)",
+  });
+  const [isMobile, setIsMobile] = useState("");
+
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const { filmDetail } = useSelector(
+    (state) => state.ManagementInfoCinemaSlice
+  );
+  console.log(filmDetail);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    dispatch(getFilmDetail(id));
+  }, []);
+
+  // tabs antd
+  const onChange = (key) => {
+    console.log(key);
+  };
+  const renderCinemars = (film) => {
+    console.log(film);
+    return film?.cumRapChieu?.map((movie, idx) => (
+      <div key={idx} className="text-white flex m-3 ">
+        <img className="w-[50px] h-[50px]" src={movie.hinhAnh} alt="" />
+        <div className="ml-2">
+          <p>{movie.tenCumRap}</p>
+          <p className="text-orange-500 mt-2">{movie.diaChi}</p>
+          <div className="grid grid-cols-4 gap-2 mt-2 w-[350px]">
+            {movie.lichChieuPhim.map((time, idx) => (
+              <NavLink className="border rounded-lg p-1 ">
+                {moment(time.ngayChieuGioChieu).format("hh:mm A")}
+              </NavLink>
+            ))}
+          </div>
+        </div>
+      </div>
+    ));
+  };
+  const items = [
+    {
+      key: "1",
+      label: <span className="text-xl">Lịch chiếu</span>,
+      children: (
+        <Tabs
+          defaultActiveKey="1"
+          tabPosition={"left"}
+          style={{
+            // overflowY: "scroll",
+            height: 350,
+            padding: 30,
+            borderRadius: "12px",
+          }}
+          items={filmDetail?.heThongRapChieu?.map((film, idx) => {
+            return {
+              label: (
+                <div className="flex justify-center items-center">
+                  <img
+                    className="w-[30px] h-[30px] mr-2"
+                    src={film.logo}
+                    alt=""
+                  />
+                  <span className=" text-white">{film.tenHeThongRap}</span>
+                </div>
+              ),
+              key: idx,
+              disabled: idx === 28,
+              children: (
+                <div className="overflow-y-scroll h-[330px]">
+                  {renderCinemars(film)}
+                </div>
+              ),
+            };
+          })}
+        />
+      ),
+    },
+    {
+      key: "2",
+      label: <span className="text-xl">Thông tin</span>,
+      children: `Content of Tab Pane 2`,
+    },
+    {
+      key: "3",
+      label: <span className="text-xl ">Đánh giá</span>,
+      children: `Content of Tab Pane 3`,
+    },
+  ];
+  return (
+    <div
+      className="mt-[6rem] "
+      style={{
+        backgroundImage: `url(${filmDetail.hinhAnh})`,
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+      }}
+    >
+      <div
+        style={{
+          backdropFilter: "blur(10px)",
+        }}
+        className=""
+      >
+        <div
+          style={{
+            paddingBottom: 0,
+          }}
+          className="flex  p-24 justify-around items-center"
+        >
+          <div className="flex flex-wrap items-center  ">
+            <img
+              className="h-[300px] w-[200px] shadow-xl"
+              src={filmDetail.hinhAnh}
+              alt=""
+            />
+            <div className="text-white pl-8">
+              <p className="text-lg">
+                {moment(filmDetail.ngayKhoiChieu).format("YYYY/MM/DD")}
+              </p>
+              <div className="my-3">
+                <span className="px-3 py-2 bg-orange-400 rounded-lg  mr-2">
+                  {filmDetail.maNhom}
+                </span>
+                <span className="text-2xl my-3">{filmDetail.tenPhim}</span>
+              </div>
+
+              {filmDetail.moTa?.length > 200 ? (
+                <p className="w-[250px]">{filmDetail.moTa.slice(0, 200)}...</p>
+              ) : (
+                <p className="w-[250px]">{filmDetail.moTa}</p>
+              )}
+            </div>
+          </div>
+          <div className=" hidden sm:block   ">
+            {/* <p className="text-white text-2xl text-center mb-3">Đánh giá</p> */}
+            <div
+              className={`c100 m-0 mb-3  p${
+                filmDetail?.danhGia * 10
+              } big text-[200px] orange `}
+            >
+              <span>{filmDetail.danhGia * 10}%</span>
+              <div class="slice">
+                <div class="bar"></div>
+                <div class="fill"></div>
+              </div>
+            </div>
+            <div className="text-white text-center ">
+              <p className="text-orange-500 text-xl">Đánh giá: </p>
+              <Rate style={{}} allowHalf value={filmDetail?.danhGia / 2} />
+            </div>
+          </div>
+        </div>
+        <div className=" px-[5%] sm:px-[20%] py-[50px] " style={{}}>
+          <Tabs
+            centered
+            className="text-black py-7 rounded-xl bg-[#181823]"
+            defaultActiveKey="1"
+            items={items}
+            onChange={onChange}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default React.memo(Detail);

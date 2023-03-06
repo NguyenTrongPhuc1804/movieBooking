@@ -88,8 +88,6 @@ function HomeMenu(props) {
     ));
   };
   const renderTabsCinema = (cumRap) => {
-    console.log(cumRap.lstCumRap);
-
     if (isMobile === "top") {
       const items = cumRap.lstCumRap.map((rap, idx) =>
         getItem(
@@ -130,18 +128,21 @@ function HomeMenu(props) {
               </div>,
               film.maPhim,
               null,
-              film.lstLichChieuTheoPhim.map((time, idx) =>
+              [
                 getItem(
-                  <div className="flex border-[1px] border-[#ffffff6e] p-[5px] rounded-md">
-                    <p>{time.tenRap}</p>:
-                    <NavLink to="/" className=" ml-2" key={idx}>
-                      {moment(time.ngayChieuGioChieu).format("hh:mm A")}
-                    </NavLink>
+                  <div className="grid grid-cols-3 h-full gap-2 my-2">
+                    {film.lstLichChieuTheoPhim.map((time, idx) => (
+                      <div className="flex border-[1px] border-[#ffffff6e] p-[5px] rounded-md">
+                        <NavLink to="/home1" className=" ml-2" key={idx}>
+                          {moment(time.ngayChieuGioChieu).format("hh:mm A")}
+                        </NavLink>
+                      </div>
+                    ))}
                   </div>,
-                  idx,
+                  1,
                   null
-                )
-              )
+                ),
+              ]
 
               // film.lstLichChieuTheoPhim.map((showTime, idx) =>
               //   getItem(
@@ -213,7 +214,6 @@ function HomeMenu(props) {
   return (
     <div className="container my-[35px]">
       <Tabs
-        type="card"
         onChange={changeTabPosition}
         tabPosition={isMobile}
         items={listInfoCinema.map((rap, i) => {

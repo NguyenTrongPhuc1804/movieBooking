@@ -24,7 +24,7 @@ function Carousel() {
     dispatch(getBanner());
   }, []);
   return (
-    <div className="pt-28 ">
+    <div className="pt-[6rem] ">
       <Swiper
         // navigation={true}
         breakpoints={{
@@ -58,7 +58,7 @@ function Carousel() {
               width: "100%",
               height: "100%",
               objectFit: "cover",
-              padding: "0 10px",
+              // padding: "0 10px",
 
               // backgroundSize: "contain",
               // backgroundPosition: "center",
@@ -67,7 +67,7 @@ function Carousel() {
             }}
           >
             <img
-              className="mx-auto rounded-lg h-[350px] sm:h-[600px]  w-full"
+              className="mx- h-[350px] sm:h-[600px]  w-full"
               src={img.hinhAnh}
               alt=""
             />

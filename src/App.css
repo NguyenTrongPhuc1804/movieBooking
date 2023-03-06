@@ -5,7 +5,7 @@
 }
 
 body {
-  font-family: "Open Sans";
+  font-family: ‘Open Sans’, sans-serif;
   font-size: 16px;
   background-color: #eee;
 }
@@ -175,6 +175,10 @@ body {
 .icon + .icon {
   padding-left: 10px;
 }
+.ant-menu-item {
+  height: 100% !important;
+  background: #000c17 !important;
+}
 .ant-menu-submenu-title {
   padding: 35px;
   border-bottom: 2px solid #ff7f50;
@@ -191,9 +195,18 @@ body {
   padding: 10px !important;
 }
 .ant-tabs-tab-active {
-  background: #001529 !important;
+  background: #3f497f !important;
+  color: #fff !important;
 }
-
+.ant-tabs-tab-btn {
+  color: #fff !important;
+}
+.ant-tabs-tab {
+  margin: 0 !important;
+}
+.ant-tabs-content-holder {
+  /* overflow-y: scroll !important; */
+}
 .custom-bar::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   border-radius: 10px;

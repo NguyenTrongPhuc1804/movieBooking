@@ -1,13 +1,19 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function CardFilm(props) {
   const { film } = props;
+  const navigate = useNavigate();
   return (
-    <article className="card rounded-lg ">
+    <article
+      style={{ cursor: "pointer" }}
+      onClick={() => {
+        navigate(`detail/${film.maPhim}`);
+      }}
+      className="card rounded-lg "
+    >
       <header className="card__thumb">
-        <a href="#">
-          <img src={film.hinhAnh} />
-        </a>
+        <img src={film.hinhAnh} />
       </header>
       {/* <date className="card__date">
         <span className="card__date__day">11</span>
@@ -21,7 +27,12 @@ export default function CardFilm(props) {
         <h3 className="text-sm card__title truncate ... text-white">
           {film.tenPhim}
         </h3>
-        <button className="mt-3 w-full bg-transparent hover:bg-[#ff7f50] text-[#ff7f50] font-semibold hover:text-white py-2 px-4 border border-[#ff7f50] hover:border-transparent rounded">
+        <button
+          onClick={() => {
+            navigate(`detail/${film.maPhim}`);
+          }}
+          className="mt-3 w-full bg-transparent hover:bg-[#ff7f50] text-[#ff7f50] font-semibold hover:text-white py-2 px-4 border border-[#ff7f50] hover:border-transparent rounded"
+        >
           Đặt vé
         </button>
         <p className="card__description">

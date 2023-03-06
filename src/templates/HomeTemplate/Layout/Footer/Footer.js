@@ -1,6 +1,14 @@
+import _ from "lodash";
 import React from "react";
+import { useSelector } from "react-redux";
 
 function Footer() {
+  const { listCinema } = useSelector(
+    (state) => state.ManagementInfoCinemaSlice
+  );
+  const arrListCinema = _.map(listCinema, (cinema) =>
+    _.pick(cinema, ["logo", "maHeThongRap", "tenHeThongRap"])
+  );
   return (
     <div>
       <footer className=" body-font text-white    bg-[#4f46e5c9]">
@@ -27,25 +35,57 @@ function Footer() {
           </div>
           <div className="flex-grow flex flex-wrap md:pr-20 -mb-10 md:text-left text-center order-first">
             <div className="lg:w-1/4 md:w-1/2 w-full px-4">
-              <h2 className="title-font font-medium  tracking-widest text-sm mb-3">
-                CATEGORIES
+              <h2 className="title-font font-medium text-center tracking-widest text-sm mb-3">
+                ĐỐI TÁC
               </h2>
-              <nav className="list-none mb-10">
+              <nav className="list-none mb-10 grid grid-cols-4 gap-y-3  ">
+                {_.map(arrListCinema, (cinema, idx) => (
+                  <li key={idx}>
+                    <img
+                      className="w-[35px] h-[35px] mx-auto"
+                      src={cinema.logo}
+                      alt=""
+                    />
+                  </li>
+                ))}
+                {_.map(arrListCinema, (cinema, idx) => (
+                  <li key={idx}>
+                    <img
+                      className="w-[35px] h-[35px] mx-auto"
+                      src={cinema.logo}
+                      alt=""
+                    />
+                  </li>
+                ))}
+              </nav>
+            </div>
+            <div className="lg:w-1/4 md:w-1/2 w-full px-4 ">
+              <h2 className="title-font text-center font-medium  tracking-widest text-sm mb-3">
+                ỨNG DỤNG DI ĐỘNG
+              </h2>
+              <nav className="list-none mb-10 flex text-3xl justify-center">
                 <li>
-                  <a className=" hover:">First Link</a>
+                  <i class="fa-brands fa-android"></i>
                 </li>
                 <li>
-                  <a className=" hover:">Second Link</a>
-                </li>
-                <li>
-                  <a className=" hover:">Third Link</a>
-                </li>
-                <li>
-                  <a className=" hover:">Fourth Link</a>
+                  <i class="fa-brands fa-apple ml-7"></i>
                 </li>
               </nav>
             </div>
             <div className="lg:w-1/4 md:w-1/2 w-full px-4">
+              <h2 className="title-font text-center font-medium  tracking-widest text-sm mb-3">
+                MẠNG XÃ HỘI
+              </h2>
+              <nav className="list-none mb-10 list-none mb-10 flex text-3xl justify-center">
+                <li>
+                  <i class="fa-brands fa-facebook"></i>
+                </li>
+                <li>
+                  <i class="fa-brands fa-twitter ml-7"></i>
+                </li>
+              </nav>
+            </div>
+            {/* <div className="lg:w-1/4 md:w-1/2 w-full px-4">
               <h2 className="title-font font-medium  tracking-widest text-sm mb-3">
                 CATEGORIES
               </h2>
@@ -63,45 +103,7 @@ function Footer() {
                   <a className=" hover:">Fourth Link</a>
                 </li>
               </nav>
-            </div>
-            <div className="lg:w-1/4 md:w-1/2 w-full px-4">
-              <h2 className="title-font font-medium  tracking-widest text-sm mb-3">
-                CATEGORIES
-              </h2>
-              <nav className="list-none mb-10">
-                <li>
-                  <a className=" hover:">First Link</a>
-                </li>
-                <li>
-                  <a className=" hover:">Second Link</a>
-                </li>
-                <li>
-                  <a className=" hover:">Third Link</a>
-                </li>
-                <li>
-                  <a className=" hover:">Fourth Link</a>
-                </li>
-              </nav>
-            </div>
-            <div className="lg:w-1/4 md:w-1/2 w-full px-4">
-              <h2 className="title-font font-medium  tracking-widest text-sm mb-3">
-                CATEGORIES
-              </h2>
-              <nav className="list-none mb-10">
-                <li>
-                  <a className=" hover:">First Link</a>
-                </li>
-                <li>
-                  <a className=" hover:">Second Link</a>
-                </li>
-                <li>
-                  <a className=" hover:">Third Link</a>
-                </li>
-                <li>
-                  <a className=" hover:">Fourth Link</a>
-                </li>
-              </nav>
-            </div>
+            </div> */}
           </div>
         </div>
         {/* <div className="bg-gray-100">
