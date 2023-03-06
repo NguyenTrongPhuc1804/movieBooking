@@ -65,10 +65,10 @@ function Footer() {
               </h2>
               <nav className="list-none mb-10 flex text-3xl justify-center">
                 <li>
-                  <i class="fa-brands fa-android"></i>
+                  <i className="fa-brands fa-android"></i>
                 </li>
                 <li>
-                  <i class="fa-brands fa-apple ml-7"></i>
+                  <i className="fa-brands fa-apple ml-7"></i>
                 </li>
               </nav>
             </div>
@@ -78,10 +78,10 @@ function Footer() {
               </h2>
               <nav className="list-none mb-10 list-none mb-10 flex text-3xl justify-center">
                 <li>
-                  <i class="fa-brands fa-facebook"></i>
+                  <i className="fa-brands fa-facebook"></i>
                 </li>
                 <li>
-                  <i class="fa-brands fa-twitter ml-7"></i>
+                  <i className="fa-brands fa-twitter ml-7"></i>
                 </li>
               </nav>
             </div>

@@ -45,7 +45,7 @@ function Detail(props) {
           </p>
           <div className="grid grid-cols-4 gap-2 mt-2 w-[350px]">
             {movie.lichChieuPhim.map((time, idx) => (
-              <NavLink className="border rounded-lg p-1 ">
+              <NavLink key={idx} className="border rounded-lg p-1 ">
                 {moment(time.ngayChieuGioChieu).format("hh:mm A")}
               </NavLink>
             ))}
@@ -72,7 +72,7 @@ function Detail(props) {
           items={filmDetail?.heThongRapChieu?.map((film, idx) => {
             return {
               label: (
-                <div className="flex justify-center items-center">
+                <div key={idx} className="flex justify-center items-center">
                   <img
                     className="w-[40px] mx-auto h-[40px] "
                     src={film.logo}
@@ -181,9 +181,9 @@ function Detail(props) {
               } big text-[200px] orange `}
             >
               <span>{filmDetail.danhGia * 10}%</span>
-              <div class="slice">
-                <div class="bar"></div>
-                <div class="fill"></div>
+              <div className="slice">
+                <div className="bar"></div>
+                <div className="fill"></div>
               </div>
             </div>
             <div className="text-white text-center ">
@@ -193,7 +193,7 @@ function Detail(props) {
           </div>
         </div>
         <div className=" px-[5%] sm:px-[20%] py-[50px] " style={{}}>
-          {filmDetail.heThongRapChieu.length === 0 ? (
+          {filmDetail?.heThongRapChieu?.length === 0 ? (
             <p className="text-white text-center text-xl">
               Không có lịch chiếu
             </p>
