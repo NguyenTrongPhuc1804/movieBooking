@@ -6,6 +6,7 @@ import { useMediaQuery } from "react-responsive";
 import { NavLink, useParams } from "react-router-dom";
 import { getFilmDetail } from "../../redux/reducer/ManagementCinemaSilce";
 import "./rating.css";
+import YouTube from "react-youtube";
 function Detail(props) {
   const isMobileDevice = useMediaQuery({
     query: "(max-device-width: 480px)",
@@ -20,6 +21,11 @@ function Detail(props) {
   console.log(filmDetail);
 
   useEffect(() => {
+    if (isMobileDevice) {
+      setIsMobile("top");
+    } else {
+      setIsMobile("left");
+    }
     window.scrollTo(0, 0);
     dispatch(getFilmDetail(id));
   }, []);
@@ -29,13 +35,14 @@ function Detail(props) {
     console.log(key);
   };
   const renderCinemars = (film) => {
-    console.log(film);
     return film?.cumRapChieu?.map((movie, idx) => (
       <div key={idx} className="text-white flex m-3 ">
         <img className="w-[50px] h-[50px]" src={movie.hinhAnh} alt="" />
         <div className="ml-2">
           <p>{movie.tenCumRap}</p>
-          <p className="text-orange-500 mt-2">{movie.diaChi}</p>
+          <p className="text-orange-500 mt-2 truncate ... w-full">
+            {movie.diaChi}
+          </p>
           <div className="grid grid-cols-4 gap-2 mt-2 w-[350px]">
             {movie.lichChieuPhim.map((time, idx) => (
               <NavLink className="border rounded-lg p-1 ">
@@ -53,8 +60,9 @@ function Detail(props) {
       label: <span className="text-xl">Lịch chiếu</span>,
       children: (
         <Tabs
+          centered
           defaultActiveKey="1"
-          tabPosition={"left"}
+          tabPosition={isMobile}
           style={{
             // overflowY: "scroll",
             height: 350,
@@ -66,11 +74,17 @@ function Detail(props) {
               label: (
                 <div className="flex justify-center items-center">
                   <img
-                    className="w-[30px] h-[30px] mr-2"
+                    className="w-[40px] mx-auto h-[40px] "
                     src={film.logo}
                     alt=""
                   />
-                  <span className=" text-white">{film.tenHeThongRap}</span>
+                  {isMobile === "top" ? (
+                    ""
+                  ) : (
+                    <span className=" text-white ml-2">
+                      {film.tenHeThongRap}
+                    </span>
+                  )}
                 </div>
               ),
               key: idx,
@@ -88,12 +102,30 @@ function Detail(props) {
     {
       key: "2",
       label: <span className="text-xl">Thông tin</span>,
-      children: `Content of Tab Pane 2`,
+      children: (
+        <div className="text-white text-lg px-11 w-full">
+          <p>Trailer :</p>
+          <div className="w-full">
+            <iframe
+              width="100%"
+              height="auto"
+              src={filmDetail.trailer}
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              title="Embedded youtube"
+            />
+          </div>
+          <br />
+          <p>Nội dung :</p>
+          <p>{filmDetail.moTa}</p>
+        </div>
+      ),
     },
     {
       key: "3",
       label: <span className="text-xl ">Đánh giá</span>,
-      children: `Content of Tab Pane 3`,
+      children: "Asdasd",
     },
   ];
   return (
@@ -119,16 +151,16 @@ function Detail(props) {
         >
           <div className="flex flex-wrap items-center  ">
             <img
-              className="h-[300px] w-[200px] shadow-xl"
+              className="h-[300px] mx-auto w-[200px] shadow-xl mb-5 lg:mb-0"
               src={filmDetail.hinhAnh}
               alt=""
             />
             <div className="text-white pl-8">
-              <p className="text-lg">
+              <p className="text-lg ">
                 {moment(filmDetail.ngayKhoiChieu).format("YYYY/MM/DD")}
               </p>
-              <div className="my-3">
-                <span className="px-3 py-2 bg-orange-400 rounded-lg  mr-2">
+              <div className="my-3  ">
+                <span className="px-3 hidden sm:inline-block py-2 bg-orange-400 rounded-lg  mr-2">
                   {filmDetail.maNhom}
                 </span>
                 <span className="text-2xl my-3">{filmDetail.tenPhim}</span>
@@ -161,13 +193,19 @@ function Detail(props) {
           </div>
         </div>
         <div className=" px-[5%] sm:px-[20%] py-[50px] " style={{}}>
-          <Tabs
-            centered
-            className="text-black py-7 rounded-xl bg-[#181823]"
-            defaultActiveKey="1"
-            items={items}
-            onChange={onChange}
-          />
+          {filmDetail.heThongRapChieu.length === 0 ? (
+            <p className="text-white text-center text-xl">
+              Không có lịch chiếu
+            </p>
+          ) : (
+            <Tabs
+              centered
+              className="text-black py-7 rounded-xl bg-[#181823]"
+              defaultActiveKey="1"
+              items={items}
+              onChange={onChange}
+            />
+          )}
         </div>
       </div>
     </div>
