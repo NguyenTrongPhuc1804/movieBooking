@@ -7,6 +7,7 @@ import { NavLink, useParams } from "react-router-dom";
 import { getFilmDetail } from "../../redux/reducer/ManagementCinemaSilce";
 import "./rating.css";
 import YouTube from "react-youtube";
+import LazyLoad from "react-lazyload";
 function Detail(props) {
   const isMobileDevice = useMediaQuery({
     query: "(max-device-width: 480px)",
@@ -104,21 +105,20 @@ function Detail(props) {
       label: <span className="text-xl">Thông tin</span>,
       children: (
         <div className="text-white text-lg px-11 w-full">
+          <p>Nội dung :</p>
+          <p>{filmDetail.moTa}</p>
+          <br />
           <p>Trailer :</p>
           <div className="w-full">
             <iframe
               width="100%"
-              height="auto"
+              height="400px"
               src={filmDetail.trailer}
-              frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
               title="Embedded youtube"
             />
           </div>
-          <br />
-          <p>Nội dung :</p>
-          <p>{filmDetail.moTa}</p>
         </div>
       ),
     },
@@ -149,13 +149,14 @@ function Detail(props) {
           }}
           className="flex  p-24 justify-around items-center"
         >
-          <div className="flex flex-wrap items-center  ">
+          <div className="flex shadow-2xl rounded-xl bg-black opacity-[1] flex-wrap items-center  ">
             <img
-              className="h-[300px] mx-auto w-[200px] shadow-xl mb-5 lg:mb-0"
+              className="h-[300px] mx-auto w-full rounded-lg  sm:w-[200px] shadow-xl mb-5 lg:mb-0"
               src={filmDetail.hinhAnh}
               alt=""
             />
-            <div className="text-white pl-8">
+
+            <div className="text-white py-4 lg:py-0 px-8">
               <p className="text-lg ">
                 {moment(filmDetail.ngayKhoiChieu).format("YYYY/MM/DD")}
               </p>

@@ -11,27 +11,19 @@ function Footer() {
   );
   return (
     <div>
-      <footer className=" body-font text-white    bg-[#4f46e5c9]">
+      <footer className=" body-font text-white    bg-[#1f1f1f]">
         <div className="container px-5 py-24 mx-auto flex md:items-center lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col">
           <div className="w-64 flex-shrink-0 md:mx-0 mx-auto text-center md:text-left md:mt-0 mt-10">
             <a className="flex title-font font-medium items-center md:justify-start justify-center ">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                className="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full"
-                viewBox="0 0 24 24"
-              >
-                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-              </svg>
-              <span className="ml-3 text-xl">Tailblocks</span>
+              <img
+                src="https://png2.cleanpng.com/sh/15e12cd1b73db869f9a5dca9878a293e/L0KzQYm3VsI2N6d9e5H0aYP2gLBuTfNqdpZ1hNdDeD36ebb1TfF2cJDrRdVybnXzfLbBmL1kcZ9qhdN8LXPsfrb3jPV5gF5pRdRqZImwRbO6UcBmQGlmfdYBMECxRoG3VMQ3PWQ2TaQEOUS0RoW3V8E3OV91htk=/kisspng-cineplexx-wien-auhof-cineplexx-cinemas-cineplexx-d-bady-5b310e88aed600.6004465315299416407161.png"
+                alt=""
+              />
+              {/* <span className="ml-3 text-xl">Tailblocks</span> */}
             </a>
-            <p className="mt-2 text-sm ">
+            {/* <p className="mt-2 text-sm ">
               Air plant banjo lyft occupy retro adaptogen indego
-            </p>
+            </p> */}
           </div>
           <div className="flex-grow flex flex-wrap md:pr-20 -mb-10 md:text-left text-center order-first">
             <div className="lg:w-1/4 md:w-1/2 w-full px-4">

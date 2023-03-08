@@ -11,7 +11,7 @@ function Header() {
             <div className="flex  rounded-lg justify-between items-center">
               <img
                 className="w[70px] rounded-lg  h-[70px]"
-                src="https://static.vecteezy.com/system/resources/previews/002/236/321/large_2x/movie-trendy-banner-vector.jpg"
+                src="https://png2.cleanpng.com/sh/15e12cd1b73db869f9a5dca9878a293e/L0KzQYm3VsI2N6d9e5H0aYP2gLBuTfNqdpZ1hNdDeD36ebb1TfF2cJDrRdVybnXzfLbBmL1kcZ9qhdN8LXPsfrb3jPV5gF5pRdRqZImwRbO6UcBmQGlmfdYBMECxRoG3VMQ3PWQ2TaQEOUS0RoW3V8E3OV91htk=/kisspng-cineplexx-wien-auhof-cineplexx-cinemas-cineplexx-d-bady-5b310e88aed600.6004465315299416407161.png"
                 alt=""
               />
               <button
@@ -61,18 +61,18 @@ function Header() {
               >
                 Features
               </NavLink>
-              <a
-                href="#"
-                className="p-2 lg:px-4 md:mx-2  text-center border border-transparent rounded hover:bg-indigo-100 hover:text-[#ff7f50] transition-colors duration-300"
+              <NavLink
+                to="login/sign-in"
+                className="p-2 lg:px-4 md:mx-2  rounded hover:bg-[#ff7f50] hover:text-white transition-colors duration-300"
               >
                 Login
-              </a>
-              <a
-                href="#"
+              </NavLink>
+              <NavLink
+                to="login/signUp"
                 className="p-2 lg:px-4 md:mx-2  text-center border border-solid border-[#ff7f50] rounded hover:bg-[#ff7f50] hover:text-white transition-colors duration-300 mt-1 md:mt-0 md:ml-1"
               >
                 Signup
-              </a>
+              </NavLink>
             </div>
           </div>
         </nav>

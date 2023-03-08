@@ -28,8 +28,9 @@ export default function CardFilm(props) {
           {film.tenPhim}
         </h3>
         <button
-          onClick={() => {
-            navigate(`detail/${film.maPhim}`);
+          onClick={(e) => {
+            e.stopPropagation();
+            navigate(`checkout/${film.maPhim}`);
           }}
           className="mt-3 w-full bg-transparent hover:bg-[#ff7f50] text-[#ff7f50] font-semibold hover:text-white py-2 px-4 border border-[#ff7f50] hover:border-transparent rounded"
         >
