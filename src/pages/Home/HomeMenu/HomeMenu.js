@@ -76,6 +76,7 @@ function HomeMenu(props) {
           <div className="grid grid-cols-4 lg:grid-cols-8 text-xs gap-2 mt-4 ">
             {film.lstLichChieuTheoPhim.map((time, idx) => (
               <NavLink
+                to={`/checkout/${time.maLichChieu}`}
                 key={idx}
                 className="border-[1px] border-[#ffffff6e] p-[5px] rounded-md"
               >

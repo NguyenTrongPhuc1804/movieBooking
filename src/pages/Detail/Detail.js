@@ -46,7 +46,11 @@ function Detail(props) {
           </p>
           <div className="grid grid-cols-4 gap-2 mt-2 w-[350px]">
             {movie.lichChieuPhim.map((time, idx) => (
-              <NavLink key={idx} className="border rounded-lg p-1 ">
+              <NavLink
+                to={`/checkout/${time.maLichChieu}`}
+                key={idx}
+                className="border rounded-lg p-1 "
+              >
                 {moment(time.ngayChieuGioChieu).format("hh:mm A")}
               </NavLink>
             ))}
@@ -73,7 +77,7 @@ function Detail(props) {
           items={filmDetail?.heThongRapChieu?.map((film, idx) => {
             return {
               label: (
-                <div key={idx} className="flex justify-center items-center">
+                <div key={idx} className="flex  justify-center items-center">
                   <img
                     className="w-[40px] mx-auto h-[40px] "
                     src={film.logo}
@@ -91,7 +95,7 @@ function Detail(props) {
               key: idx,
               disabled: idx === 28,
               children: (
-                <div className="overflow-y-scroll h-[330px]">
+                <div className="overflow-y-scroll h-[250px] lg:h-[330px]">
                   {renderCinemars(film)}
                 </div>
               ),

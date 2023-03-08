@@ -39,7 +39,7 @@ function Header() {
                     : "p-2 lg:px-4 md:mx-2  rounded hover:bg-[#ff7f50] hover:text-white transition-colors duration-300"
                 }
               >
-                Home
+                Trang chủ
               </NavLink>
               <NavLink
                 to="/2"
@@ -65,13 +65,13 @@ function Header() {
                 to="login/sign-in"
                 className="p-2 lg:px-4 md:mx-2  rounded hover:bg-[#ff7f50] hover:text-white transition-colors duration-300"
               >
-                Login
+                Đăng nhập
               </NavLink>
               <NavLink
                 to="login/signUp"
                 className="p-2 lg:px-4 md:mx-2  text-center border border-solid border-[#ff7f50] rounded hover:bg-[#ff7f50] hover:text-white transition-colors duration-300 mt-1 md:mt-0 md:ml-1"
               >
-                Signup
+                Đăng ký
               </NavLink>
             </div>
           </div>

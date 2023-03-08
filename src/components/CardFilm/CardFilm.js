@@ -29,12 +29,12 @@ export default function CardFilm(props) {
         </h3>
         <button
           onClick={(e) => {
-            e.stopPropagation();
-            navigate(`checkout/${film.maPhim}`);
+            // e.stopPropagation();
+            // navigate(`checkout/${film.maPhim}`);
           }}
           className="mt-3 w-full bg-transparent hover:bg-[#ff7f50] text-[#ff7f50] font-semibold hover:text-white py-2 px-4 border border-[#ff7f50] hover:border-transparent rounded"
         >
-          Đặt vé
+          Xem chi tiết
         </button>
         <p className="card__description">
           {film.moTa.length > 80 ? (

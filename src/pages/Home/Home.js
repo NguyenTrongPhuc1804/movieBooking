@@ -79,7 +79,7 @@ function Home() {
           200: {
             centeredSlides: false,
 
-            slidesPerView: 1,
+            slidesPerView: 1.2,
             grid: {
               rows: 2,
               fill: "row",
