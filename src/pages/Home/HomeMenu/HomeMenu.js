@@ -134,7 +134,11 @@ function HomeMenu(props) {
                   <div className="grid grid-cols-3 h-full gap-2 my-2">
                     {film.lstLichChieuTheoPhim.map((time, idx) => (
                       <div className="flex border-[1px] border-[#ffffff6e] p-[5px] rounded-md">
-                        <NavLink to="/home1" className=" ml-2" key={idx}>
+                        <NavLink
+                          to={`/checkout/${time.maLichChieu}`}
+                          className=" ml-2"
+                          key={idx}
+                        >
                           {moment(time.ngayChieuGioChieu).format("hh:mm A")}
                         </NavLink>
                       </div>
