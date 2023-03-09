@@ -64,7 +64,7 @@ function Checkout() {
                 <p
                   className="w-[35px] h-[35px] m-1   
              text-center   rounded-lg border border-gray-700"
-                ></p>{" "}
+                ></p>
                 <span>Ghế có thể đặt</span>
               </div>
               <div className="flex items-center">
@@ -73,11 +73,11 @@ function Checkout() {
              text-center rounded-lg border border-gray-700 flex items-center justify-center"
                 >
                   X
-                </p>{" "}
+                </p>
                 <span>Ghế đã đặt</span>
               </div>
               <div className="flex items-center">
-                <p className="   w-[35px] h-[35px] m-1  text-center rounded-lg   border-4 border-red-900 "></p>{" "}
+                <p className="   w-[35px] h-[35px] m-1  text-center rounded-lg   border-4 border-red-900 "></p>
                 <span>Ghế Vip</span>
               </div>
             </div>
@@ -88,10 +88,9 @@ function Checkout() {
         <div className="px-6 py-3 h-full shadow-2xl">
           <div className="border-b-2 border-gray-500 py-3   text-center ">
             <strong className="text-5xl text-[#539165]">
-              {" "}
               {listTicket
                 .reduce((bill, ghe, idx) => bill + ghe.giaVe, 0)
-                .toLocaleString()}{" "}
+                .toLocaleString()}
               vnd
             </strong>
           </div>
@@ -106,7 +105,7 @@ function Checkout() {
             </strong>
             <p>Địa chỉ: {infoRoom.thongTinPhim?.diaChi}</p>
             <p>
-              Ngày chiếu: {infoRoom.thongTinPhim?.gioChieu}{" "}
+              Ngày chiếu: {infoRoom.thongTinPhim?.gioChieu}
               {infoRoom.thongTinPhim?.ngayChieu}
             </p>
           </div>
@@ -122,7 +121,7 @@ function Checkout() {
             <strong className="text-[#539165] text-lg">
               {listTicket
                 .reduce((bill, ghe, idx) => bill + ghe.giaVe, 0)
-                .toLocaleString()}{" "}
+                .toLocaleString()}
               vnd
             </strong>
           </div>
