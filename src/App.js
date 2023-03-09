@@ -29,7 +29,7 @@ function App() {
   return (
     <div>
       <BrowserRouter>
-        <Routes history={history}>
+        <Routes>
           <Route path="/" element={<HomeTemplate />}>
             <Route path="" element={<Home />} />
             <Route path="detail/:id" element={<Detail />} />

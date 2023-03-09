@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../redux/reducer/ManagementUserSlice";
 import { history } from "../../App";
 import { redirect, useNavigate } from "react-router-dom";
 import { USER_INFO } from "../../util/setting/config";
+import { Alert } from "antd";
 function Login() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
+  const dispatch = useDispatch();
+  const { login } = useSelector((state) => state.ManagementUserSlice);
   // formik
   const formik = useFormik({
     initialValues: {
@@ -24,11 +26,14 @@ function Login() {
     }),
     onSubmit: (values) => {
       dispatch(loginUser(values));
-      {
-        localStorage.getItem(USER_INFO) ? navigate(-1) : navigate(-2);
-      }
     },
   });
+  useEffect(() => {
+    if (localStorage.getItem(USER_INFO)) {
+      alert("dang nhap thanh cong");
+      return navigate("/");
+    }
+  }, [login]);
   return (
     <form onSubmit={formik.handleSubmit} className="px-4 md:px-0 lg:w-6/12">
       <div className="md:mx-6 md:p-12">

@@ -5,6 +5,7 @@ import { history } from "../../App";
 import { redirect } from "react-router-dom";
 const initialState = {
   userInfo: {},
+  login: false,
 };
 
 export const ManagementUserSlice = createSlice({
@@ -20,6 +21,7 @@ export const ManagementUserSlice = createSlice({
         state.userInfo = content;
         localStorage.setItem(ACCESS_TOKEN, state.userInfo.accessToken);
         localStorage.setItem(USER_INFO, JSON.stringify(state.userInfo));
+        state.login = true;
       }
     });
   },
@@ -28,7 +30,6 @@ export const ManagementUserSlice = createSlice({
 // login user
 export const loginUser = createAsyncThunk("user/loginUser", async (user) => {
   const { data } = await requestMovie.post("QuanLyNguoiDung/DangNhap", user);
-
   return data;
 });
 

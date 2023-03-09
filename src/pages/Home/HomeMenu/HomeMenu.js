@@ -112,7 +112,7 @@ function HomeMenu(props) {
           ></img>,
           rap.danhSachPhim.map((film, idx) =>
             getItem(
-              <div className="flex ">
+              <div key={idx} className="flex ">
                 <img className="w-[50px] h-[50px]" src={film.hinhAnh} alt="" />
                 <div className="ml-2">
                   <p className="leading-none">{film.tenPhim}</p>
@@ -133,7 +133,10 @@ function HomeMenu(props) {
                 getItem(
                   <div className="grid grid-cols-3 h-full gap-2 my-2">
                     {film.lstLichChieuTheoPhim.map((time, idx) => (
-                      <div className="flex border-[1px] border-[#ffffff6e] p-[5px] rounded-md">
+                      <div
+                        key={idx}
+                        className="flex border-[1px] border-[#ffffff6e] p-[5px] rounded-md"
+                      >
                         <NavLink
                           to={`/checkout/${time.maLichChieu}`}
                           className=" ml-2"
