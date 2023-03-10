@@ -2,28 +2,53 @@ import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import {
+  bookingTicket,
   getInfoRoom,
   updateTicket,
 } from "../../redux/reducer/ManagementBookingSlice";
 import { USER_INFO } from "../../util/setting/config";
-import { ArrowLeftOutlined } from "@ant-design/icons";
+import { ArrowLeftOutlined, UserOutlined } from "@ant-design/icons";
 import _ from "lodash";
 function Checkout() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
-  const { infoRoom } = useSelector((state) => state.ManagementBookingSlice);
-  const { listTicket } = useSelector((state) => state.ManagementBookingSlice);
+  const { infoRoom, listTicket, errorMessage, reloadPage } = useSelector(
+    (state) => state.ManagementBookingSlice
+  );
+  const { userInfo } = useSelector((state) => state.ManagementUserSlice);
   const infoUser = JSON.parse(localStorage.getItem(USER_INFO));
-  console.log(listTicket);
+  console.log(JSON.parse(localStorage.getItem(USER_INFO)).taiKhoan);
   useEffect(() => {
     dispatch(getInfoRoom(id));
   }, []);
-
+  useEffect(() => {
+    if (reloadPage) {
+      navigate(0);
+    }
+  }, [reloadPage]);
+  const danhSachVe = listTicket.map((ticket, idx) => ({
+    maGhe: ticket.maGhe,
+    giaVe: ticket.giaVe,
+  }));
   const renderGhe = () =>
     infoRoom.danhSachGhe?.map((ghe, idx) => {
       let index = listTicket.findIndex((gheDD) => gheDD.maGhe === ghe.maGhe);
-
+      let classUserBooking = "";
+      let classUserBooked = "";
+      let classChoseTicket = "";
+      if (index !== -1) {
+        classChoseTicket = "bg-[#5D9C59] text-white";
+      }
+      if (ghe.daDat) {
+        classUserBooked = "bg-[#EB455F] text-white";
+      }
+      if (
+        JSON.parse(localStorage.getItem(USER_INFO)).taiKhoan ===
+        ghe.taiKhoanNguoiDat
+      ) {
+        classUserBooking = "bg-[#865DFF]";
+      }
       return (
         <Fragment key={idx}>
           <button
@@ -33,20 +58,20 @@ function Checkout() {
             disabled={ghe.daDat}
             className={
               ghe.loaiGhe === "Thuong"
-                ? `w-[35px] h-[35px] m-1 ${
-                    ghe.daDat ? "bg-[#EB455F] text-white" : ""
-                  }  
-             text-center ${
-               index !== -1 ? "bg-[#5D9C59] text-white" : ""
-             }  rounded-lg border border-gray-700`
-                : ` ${
-                    ghe.daDat ? "bg-[#EB455F] text-white" : ""
-                  }  w-[35px] h-[35px] m-1  text-center rounded-lg   border-4 border-red-900 ${
-                    index !== -1 ? "bg-[#5D9C59] text-white" : ""
-                  }`
+                ? `w-[35px] h-[35px] m-1 ${classUserBooking}  ${classUserBooked}  
+             text-center ${classChoseTicket}  rounded-lg border border-gray-700  `
+                : ` ${classUserBooked}   ${classUserBooking} w-[35px] h-[35px] m-1  text-center rounded-lg   border-4 border-red-900 ${classChoseTicket}  ${classUserBooking} `
             }
           >
-            {ghe.daDat ? "X" : ghe.tenGhe}
+            {ghe.daDat ? (
+              classUserBooking !== "" ? (
+                <UserOutlined />
+              ) : (
+                "X"
+              )
+            ) : (
+              ghe.tenGhe
+            )}
           </button>
           {(idx + 1) % 16 === 0 ? <br /> : ""}
         </Fragment>
@@ -138,7 +163,17 @@ function Checkout() {
               <ArrowLeftOutlined />
               Trở lại
             </button>
-            <button className="p-3   w-[150px] text-xl   bg-[#f26b38] transition text-white">
+            <button
+              onClick={() => {
+                dispatch(
+                  bookingTicket({
+                    maLichChieu: id,
+                    danhSachVe,
+                  })
+                );
+              }}
+              className="p-3   w-[150px] text-xl   bg-[#f26b38] transition text-white"
+            >
               Đặt vé
             </button>
           </div>

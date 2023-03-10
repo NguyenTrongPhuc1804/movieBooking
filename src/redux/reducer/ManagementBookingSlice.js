@@ -1,7 +1,12 @@
 import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
+import { InfoBookTiket } from "../../core/modal/InfoBookTicket";
 import requestMovie from "../../services/servicesReques";
+import { openCustomNotificationWithIcon } from "../../util/setting/nontification";
 
 const initialState = {
+  reloadPage: false,
+  isLoading: false,
+  errorMessage: "",
   infoRoom: {},
   listTicket: [],
 };
@@ -22,13 +27,34 @@ export const ManagementBookingSlice = createSlice({
       } else {
         state.listTicket.push(action.payload);
       }
-      // console.log(current(state));
     },
   },
   extraReducers: (builder) => {
     builder.addCase(getInfoRoom.fulfilled, (state, action) => {
       const { content, statusCode } = action.payload;
       state.infoRoom = content;
+    });
+    //booking ticket api
+    builder.addCase(bookingTicket.fulfilled, (state, action) => {
+      if (action.payload.statusCode === 200) {
+        openCustomNotificationWithIcon(
+          "success",
+          "Đặt vé thành công",
+          "",
+          "topRight"
+        );
+      }
+      console.log(action);
+    });
+    builder.addCase(bookingTicket.rejected, (state, action) => {
+      state.isLoading = false;
+      state.errorMessage = action.payload.message;
+      openCustomNotificationWithIcon(
+        "error",
+        `${state.errorMessage}`,
+        "",
+        "topRight"
+      );
     });
   },
 });
@@ -41,6 +67,22 @@ export const getInfoRoom = createAsyncThunk(
       `QuanLyDatVe/LayDanhSachPhongVe?MaLichChieu=${idBooking}`
     );
     return data;
+  }
+);
+
+// booking ticket api
+export const bookingTicket = createAsyncThunk(
+  "booking/bookingTicket",
+  async (infoBookTiket = new InfoBookTiket(), { rejectWithValue }) => {
+    try {
+      const { data } = await requestMovie.post(
+        "QuanLyDatVe/DatVe",
+        infoBookTiket
+      );
+      return data;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
   }
 );
 export const { updateTicket } = ManagementBookingSlice.actions;
