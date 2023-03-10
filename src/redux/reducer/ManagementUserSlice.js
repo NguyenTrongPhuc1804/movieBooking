@@ -12,7 +12,12 @@ export const ManagementUserSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    reducerName: (state, action) => {},
+    logOut: (state, action) => {
+      state.login = false;
+      localStorage.removeItem(ACCESS_TOKEN);
+      localStorage.removeItem(USER_INFO);
+      alert("Đăng xuất thành công");
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(loginUser.fulfilled, (state, action) => {
@@ -33,6 +38,6 @@ export const loginUser = createAsyncThunk("user/loginUser", async (user) => {
   return data;
 });
 
-export const { reducerName } = ManagementUserSlice.actions;
+export const { logOut } = ManagementUserSlice.actions;
 
 export default ManagementUserSlice.reducer;
