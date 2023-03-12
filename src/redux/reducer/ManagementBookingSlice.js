@@ -10,6 +10,7 @@ const initialState = {
   errorMessage: "",
   infoRoom: {},
   listTicket: [],
+  ActiveTabs: "1",
 };
 
 export const ManagementBookingSlice = createSlice({
@@ -29,6 +30,9 @@ export const ManagementBookingSlice = createSlice({
         state.listTicket.push(action.payload);
       }
     },
+    activeTabs: (state, action) => {
+      state.ActiveTabs = action.key;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getInfoRoom.fulfilled, (state, action) => {
@@ -44,6 +48,7 @@ export const ManagementBookingSlice = createSlice({
           "",
           "topRight"
         );
+        state.ActiveTabs = "2";
       }
       console.log(action);
     });
@@ -75,8 +80,8 @@ export const getInfoRoom = createAsyncThunk(
       return data;
     } catch (err) {
       console.log(err);
-      return err;
       dispatch(hiddenLoading());
+      return err;
     }
   }
 );
@@ -105,6 +110,6 @@ export const bookingTicket = createAsyncThunk(
     }
   }
 );
-export const { updateTicket } = ManagementBookingSlice.actions;
+export const { updateTicket, activeTabs } = ManagementBookingSlice.actions;
 
 export default ManagementBookingSlice.reducer;

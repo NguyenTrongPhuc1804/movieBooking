@@ -2,6 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import {
+  activeTabs,
   bookingTicket,
   getInfoRoom,
   updateTicket,
@@ -208,13 +209,15 @@ function Bookingresults(props) {
           <dt className="text-base font-semibold leading-7 text-gray-900">
             <div className="absolute top-0 left-0 flex h-full w-[80px] items-center justify-center  ">
               <img
-                className="rounded-md mr-3 w-full h-full"
+                className="rounded-md mr-3  w-full h-full"
                 src={ticket.hinhAnh}
                 alt=""
               />
             </div>
             <div className="flex items-center">
-              <p className="text-2xl truncate ...">{ticket.tenPhim}</p>
+              <p className="text-2xl text-indigo-600 truncate ...">
+                {ticket.tenPhim}
+              </p>
 
               <span className="text-gray-400 ml-3">
                 {ticket.thoiLuongPhim}p
@@ -222,9 +225,31 @@ function Bookingresults(props) {
             </div>
           </dt>
           <dd className="mt-2 text-base leading-7 text-gray-600">
-            <p>Ngày đặt {moment(ticket.ngayDat).format("DD/MM/YYYY")}</p>
-            <p>Địa chỉ: {seat.tenHeThongRap}</p>
-            <p> {seat.tenCumRap}</p>
+            <p>
+              {" "}
+              <strong>Ngày đặt:</strong>{" "}
+              {moment(ticket.ngayDat).format("DD/MM/YYYY")}
+            </p>
+
+            <p>
+              <strong>Địa chỉ:</strong> {seat.tenHeThongRap}
+            </p>
+            <div className="flex truncate ...">
+              <p className="">
+                <strong>Tên rạp</strong> {seat.tenCumRap}
+              </p>
+              <p>
+                <strong> Ghế :</strong>
+                {ticket.danhSachGhe.slice(0, 3).map((ghe, idx) => {
+                  return (
+                    <span key={idx} className="text-[#AA77FF] ">
+                      [{ghe.tenGhe}]{" "}
+                    </span>
+                  );
+                })}
+                <span>{ticket.danhSachGhe.length > 3 ? "..." : ""}</span>
+              </p>
+            </div>
           </dd>
         </div>
       );
@@ -270,9 +295,22 @@ const items = [
   },
 ];
 export default function (props) {
+  const dispatch = useDispatch();
+  const { ActiveTabs } = useSelector((state) => state.ManagementBookingSlice);
+
   return (
     <div className="bg-[#3f3f3f] p-5">
-      <Tabs className=" " size="large" defaultActiveKey="1" items={items} />;
+      <Tabs
+        className=" "
+        size="large"
+        // defaultActiveKey="1"
+        activeKey={ActiveTabs}
+        items={items}
+        onChange={(key) => {
+          dispatch(activeTabs(key));
+        }}
+      />
+      ;
     </div>
   );
 }
