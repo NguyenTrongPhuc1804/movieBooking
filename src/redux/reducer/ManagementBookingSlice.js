@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
 import { InfoBookTiket } from "../../core/modal/InfoBookTicket";
 import requestMovie from "../../services/servicesReques";
 import { openCustomNotificationWithIcon } from "../../util/setting/nontification";
+import { displayLoading, hiddenLoading } from "./LoadingSlice";
 
 const initialState = {
   reloadPage: false,
@@ -47,14 +48,15 @@ export const ManagementBookingSlice = createSlice({
       console.log(action);
     });
     builder.addCase(bookingTicket.rejected, (state, action) => {
-      state.isLoading = false;
-      state.errorMessage = action.payload.message;
-      openCustomNotificationWithIcon(
-        "error",
-        `${state.errorMessage}`,
-        "",
-        "topRight"
-      );
+      // state.isLoading = false;
+      // state.errorMessage = action.payload.message;
+      // openCustomNotificationWithIcon(
+      //   "error",
+      //   `${state.errorMessage}`,
+      //   "",
+      //   "topRight"
+      // );
+      console.log(action);
     });
   },
 });
@@ -62,25 +64,43 @@ export const ManagementBookingSlice = createSlice({
 // get list room
 export const getInfoRoom = createAsyncThunk(
   "booking/getInfoRoom",
-  async (idBooking) => {
-    const { data } = await requestMovie.get(
-      `QuanLyDatVe/LayDanhSachPhongVe?MaLichChieu=${idBooking}`
-    );
-    return data;
+  async (idBooking, { dispatch }) => {
+    dispatch(displayLoading());
+    try {
+      const { data } = await requestMovie.get(
+        `QuanLyDatVe/LayDanhSachPhongVe?MaLichChieu=${idBooking}`
+      );
+      dispatch(hiddenLoading());
+
+      return data;
+    } catch (err) {
+      console.log(err);
+      return err;
+      dispatch(hiddenLoading());
+    }
   }
 );
 
 // booking ticket api
 export const bookingTicket = createAsyncThunk(
   "booking/bookingTicket",
-  async (infoBookTiket = new InfoBookTiket(), { rejectWithValue }) => {
+  async (
+    infoBookTiket = new InfoBookTiket(),
+    { rejectWithValue, dispatch }
+  ) => {
+    dispatch(displayLoading());
     try {
       const { data } = await requestMovie.post(
         "QuanLyDatVe/DatVe",
         infoBookTiket
       );
+      await dispatch(getInfoRoom(infoBookTiket.maLichChieu));
+      dispatch(hiddenLoading());
       return data;
     } catch (err) {
+      console.log(err);
+      dispatch(hiddenLoading());
+
       return rejectWithValue(err);
     }
   }

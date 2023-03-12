@@ -4,6 +4,7 @@ import ManagementFilmSlice from "./reducer/ManagementFilmSlice";
 import ManagementInfoCinemaSlice from "./reducer/ManagementCinemaSilce";
 import ManagementUserSlice from "./reducer/ManagementUserSlice";
 import ManagementBookingSlice from "./reducer/ManagementBookingSlice";
+import LoadingSlice from "./reducer/LoadingSlice";
 
 export const store = configureStore({
   reducer: {
@@ -12,5 +13,6 @@ export const store = configureStore({
     ManagementInfoCinemaSlice,
     ManagementUserSlice,
     ManagementBookingSlice,
+    LoadingSlice,
   },
 });

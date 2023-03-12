@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import { logOut } from "../../../../redux/reducer/ManagementUserSlice";
 import { USER_INFO } from "../../../../util/setting/config";
 
 function Header() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { login } = useSelector((state) => state.ManagementUserSlice);
   const infoUser = JSON.parse(localStorage.getItem(USER_INFO));
@@ -70,15 +71,16 @@ function Header() {
               {localStorage.getItem(USER_INFO) ? (
                 <div className="flex items-center justify-between">
                   <p className="p-2">Xin chào {infoUser.hoTen}!!</p>
-                  <NavLink
+                  <button
                     onClick={() => {
                       dispatch(logOut());
+                      navigate(0);
                     }}
-                    to="/"
+                    // to="/"
                     className="p-2 lg:px-4 md:mx-2  text-center border border-solid border-[#ff7f50] rounded hover:bg-[#ff7f50] hover:text-white transition-colors duration-300 mt-1 md:mt-0 md:ml-1"
                   >
                     Đăng xuất
-                  </NavLink>
+                  </button>
                 </div>
               ) : (
                 <div className="span flex ">

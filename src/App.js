@@ -20,7 +20,7 @@ import Login from "./pages/Login/Login";
 import UserTemplate from "./templates/UserThemplate/UserTemplate";
 import Register from "./pages/Register/Register";
 import { createBrowserHistory } from "history";
-
+import Loading from "./components/Loading/Loading";
 export const history = createBrowserHistory();
 const CheckoutTemplateLazy = lazy(() =>
   import("./templates/CheckoutTemplate/CheckoutTemplate")
@@ -29,6 +29,7 @@ function App() {
   return (
     <div>
       <BrowserRouter>
+        <Loading />
         <Routes>
           <Route path="/" element={<HomeTemplate />}>
             <Route path="" element={<Home />} />

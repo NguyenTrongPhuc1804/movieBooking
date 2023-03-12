@@ -9,16 +9,19 @@ import {
 import { USER_INFO } from "../../util/setting/config";
 import { ArrowLeftOutlined, UserOutlined } from "@ant-design/icons";
 import _ from "lodash";
-function Checkout() {
+import { Tabs } from "antd";
+import { getHistoryUserBookTicket } from "../../redux/reducer/ManagementUserSlice";
+import moment from "moment";
+function Checkout(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
+  console.log(id);
   const { infoRoom, listTicket, errorMessage, reloadPage } = useSelector(
     (state) => state.ManagementBookingSlice
   );
   const { userInfo } = useSelector((state) => state.ManagementUserSlice);
   const infoUser = JSON.parse(localStorage.getItem(USER_INFO));
-  console.log(JSON.parse(localStorage.getItem(USER_INFO)).taiKhoan);
   useEffect(() => {
     dispatch(getInfoRoom(id));
   }, []);
@@ -79,7 +82,7 @@ function Checkout() {
     });
   return (
     <div className="grid grid-cols-12 content-center h-[100%] ">
-      <div className="col-span-full lg:col-span-9 text-white p-5 ">
+      <div className="col-span-full lg:col-span-9 text-white ">
         <div className="bg-[#f26b38] p-5">
           <h1 className="text-3xl ">Chọn ghế</h1>
           <div className=" bg-white  text-gray-700 text-left lg:text-center    overflow-auto p-9">
@@ -109,10 +112,10 @@ function Checkout() {
           </div>
         </div>
       </div>
-      <div className="col-span-full lg:col-span-3 h-full  px-3">
+      <div className="col-span-full lg:col-span-3 h-full  text-white px-3">
         <div className="px-6 py-3 h-full shadow-2xl">
           <div className="border-b-2 border-gray-500 py-3   text-center ">
-            <strong className="text-5xl text-[#539165]">
+            <strong className="text-5xl text-[#B5F1CC]">
               {listTicket
                 .reduce((bill, ghe, idx) => bill + ghe.giaVe, 0)
                 .toLocaleString()}
@@ -130,12 +133,12 @@ function Checkout() {
             </strong>
             <p>Địa chỉ: {infoRoom.thongTinPhim?.diaChi}</p>
             <p>
-              Ngày chiếu: {infoRoom.thongTinPhim?.gioChieu}
+              Ngày chiếu: {infoRoom.thongTinPhim?.gioChieu} <span></span>
               {infoRoom.thongTinPhim?.ngayChieu}
             </p>
           </div>
-          <div className="border-b-2 border-gray-500 py-3  flex justify-between">
-            <strong className="text-red-500 flex flex-wrap w-[200px]">
+          <div className="border-b-2  border-gray-500 py-3  flex justify-between">
+            <strong className="text-[#D61355] flex flex-wrap w-[200px]">
               Ghế :
               {_.sortBy(listTicket, ["stt"]).map((ghe, idx) => (
                 <span key={idx} className="ml-2">
@@ -143,7 +146,7 @@ function Checkout() {
                 </span>
               ))}
             </strong>
-            <strong className="text-[#539165] text-lg">
+            <strong className="text-[#B5F1CC] text-lg">
               {listTicket
                 .reduce((bill, ghe, idx) => bill + ghe.giaVe, 0)
                 .toLocaleString()}
@@ -151,15 +154,20 @@ function Checkout() {
             </strong>
           </div>
           <div className="border-b-2 border-gray-500 py-3  ">
-            <p className="text-gray-500 mb-2">E-mail</p>
+            <p className="text-gray-400 mb-2">E-mail</p>
             <p>{infoUser.email}</p>
           </div>
           <div className="border-b-2 border-gray-500 py-3  ">
-            <p className="text-gray-500 mb-2">Phone</p>
+            <p className="text-gray-400 mb-2">Phone</p>
             <p>{infoUser.soDT}</p>
           </div>
           <div className="flex justify-around mt-5">
-            <button className="p-3  w-[150px]  text-xl flex items-center justify-around border border-gray-700 transition hover:bg-[#fff]  text-gray-700">
+            <button
+              onClick={() => {
+                navigate(-1);
+              }}
+              className="p-3  w-[40%] rounded-md text-xl flex items-center justify-around border border-gray-50 transition hover:bg-[#fff] hover:text-black text-white"
+            >
               <ArrowLeftOutlined />
               Trở lại
             </button>
@@ -172,7 +180,7 @@ function Checkout() {
                   })
                 );
               }}
-              className="p-3   w-[150px] text-xl   bg-[#f26b38] transition text-white"
+              className="p-3   w-[40%] text-xl rounded-md  bg-[#f26b38] transition text-white"
             >
               Đặt vé
             </button>
@@ -183,4 +191,88 @@ function Checkout() {
   );
 }
 
-export default Checkout;
+function Bookingresults(props) {
+  const dispatch = useDispatch();
+  const { historyUserBookTicket } = useSelector(
+    (state) => state.ManagementUserSlice
+  );
+  console.log(historyUserBookTicket);
+  useEffect(() => {
+    dispatch(getHistoryUserBookTicket());
+  }, []);
+  const renderHistoryBooking = () => {
+    return historyUserBookTicket.thongTinDatVe?.map((ticket, idx) => {
+      const seat = _.first(ticket.danhSachGhe);
+      return (
+        <div key={idx} className="relative pl-[80px] ">
+          <dt className="text-base font-semibold leading-7 text-gray-900">
+            <div className="absolute top-0 left-0 flex h-full w-[80px] items-center justify-center  ">
+              <img
+                className="rounded-md mr-3 w-full h-full"
+                src={ticket.hinhAnh}
+                alt=""
+              />
+            </div>
+            <div className="flex items-center">
+              <p className="text-2xl truncate ...">{ticket.tenPhim}</p>
+
+              <span className="text-gray-400 ml-3">
+                {ticket.thoiLuongPhim}p
+              </span>
+            </div>
+          </dt>
+          <dd className="mt-2 text-base leading-7 text-gray-600">
+            <p>Ngày đặt {moment(ticket.ngayDat).format("DD/MM/YYYY")}</p>
+            <p>Địa chỉ: {seat.tenHeThongRap}</p>
+            <p> {seat.tenCumRap}</p>
+          </dd>
+        </div>
+      );
+    });
+  };
+  return (
+    <div>
+      <div className="bg-white shadow-2xl  py-24 sm:py-32">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="mx-auto max-w-2xl lg:text-center">
+            {/* <h2 className="text-base font-semibold leading-7 text-indigo-600">
+              Deploy faster
+            </h2> */}
+            <p className="mt-2 text-3xl font-bold tracking-tight text-indigo-600   sm:text-4xl">
+              Lịch sử đặt vé khách hàng
+            </p>
+            <p className="mt-6 text-lg leading-8 text-gray-600">
+              Hãy xem thông tin địa chỉ và thời gian để xem phim vui vẻ bạn nhé
+              !
+            </p>
+          </div>
+          <div className="mx-auto mt-16  sm:mt-20 lg:mt-24 ">
+            <dl className="grid max-w-2xl grid-cols-1 gap-y-10 gap-x-8 lg:max-w-none lg:grid-cols-3 lg:gap-y-16">
+              {renderHistoryBooking()}
+            </dl>
+          </div>
+        </div>
+      </div>
+      ;
+    </div>
+  );
+}
+const items = [
+  {
+    key: "1",
+    label: `01 CHỌN GHẾ & THANH TOÁN`,
+    children: <Checkout />,
+  },
+  {
+    key: "2",
+    label: `02 KẾT QUẢ ĐẶT VÉ`,
+    children: <Bookingresults />,
+  },
+];
+export default function (props) {
+  return (
+    <div className="bg-[#3f3f3f] p-5">
+      <Tabs className=" " size="large" defaultActiveKey="1" items={items} />;
+    </div>
+  );
+}

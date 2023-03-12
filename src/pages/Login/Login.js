@@ -30,7 +30,6 @@ function Login() {
   });
   useEffect(() => {
     if (localStorage.getItem(USER_INFO)) {
-      alert("dang nhap thanh cong");
       return navigate("/");
     }
   }, [login]);
