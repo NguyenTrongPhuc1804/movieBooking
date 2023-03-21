@@ -21,6 +21,10 @@ import UserTemplate from "./templates/UserThemplate/UserTemplate";
 import Register from "./pages/Register/Register";
 import { createBrowserHistory } from "history";
 import Loading from "./components/Loading/Loading";
+import "./i18n";
+import AdminTemplate from "./templates/AdminTemplate/AdminTemplate";
+import Film from "./pages/Film/Film";
+import AddNew from "./pages/Film/AddNew/AddNew";
 export const history = createBrowserHistory();
 const CheckoutTemplateLazy = lazy(() =>
   import("./templates/CheckoutTemplate/CheckoutTemplate")
@@ -34,13 +38,19 @@ function App() {
           <Route path="/" element={<HomeTemplate />}>
             <Route path="" element={<Home />} />
             <Route path="detail/:id" element={<Detail />} />
-          </Route>
-          <Route path="/checkout/:id" element={<CheckoutTemplate />}>
-            <Route path="" element={<Checkout />}></Route>
+            <Route path="/checkout/:id" element={<CheckoutTemplate />}>
+              <Route path="" element={<Checkout />}></Route>
+            </Route>
           </Route>
           <Route path="/login" element={<UserTemplate />}>
             <Route path="sign-in" element={<Login />}></Route>
             <Route path="sign-up" element={<Register />}></Route>
+          </Route>
+
+          <Route path="/admin" element={<AdminTemplate />}>
+            <Route path="" element={<Film />}></Route>
+            <Route path="film" element={<Film />}></Route>
+            <Route path="film/add-new" element={<AddNew />} />
           </Route>
         </Routes>
       </BrowserRouter>

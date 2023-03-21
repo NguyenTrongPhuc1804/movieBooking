@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
+import { connection } from "../..";
 import { InfoBookTiket } from "../../core/modal/InfoBookTicket";
 import requestMovie from "../../services/servicesReques";
 import { openCustomNotificationWithIcon } from "../../util/setting/nontification";
@@ -10,6 +11,7 @@ const initialState = {
   errorMessage: "",
   infoRoom: {},
   listTicket: [],
+  listOtherUserBooking: [{ maGhe: 47401 }, { maGhe: 47402 }],
   ActiveTabs: "1",
 };
 
@@ -33,6 +35,9 @@ export const ManagementBookingSlice = createSlice({
     activeTabs: (state, action) => {
       state.ActiveTabs = action.key;
     },
+    updateRealTime: (state, action) => {
+      console.log(action);
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getInfoRoom.fulfilled, (state, action) => {
@@ -53,15 +58,14 @@ export const ManagementBookingSlice = createSlice({
       console.log(action);
     });
     builder.addCase(bookingTicket.rejected, (state, action) => {
-      // state.isLoading = false;
-      // state.errorMessage = action.payload.message;
-      // openCustomNotificationWithIcon(
-      //   "error",
-      //   `${state.errorMessage}`,
-      //   "",
-      //   "topRight"
-      // );
-      console.log(action);
+      state.isLoading = false;
+      state.errorMessage = action.payload.message;
+      openCustomNotificationWithIcon(
+        "error",
+        `${state.errorMessage}`,
+        "",
+        "topRight"
+      );
     });
   },
 });
@@ -110,6 +114,25 @@ export const bookingTicket = createAsyncThunk(
     }
   }
 );
-export const { updateTicket, activeTabs } = ManagementBookingSlice.actions;
+// realTime
+export const realTimeBooking = createAsyncThunk(
+  "booking/realTimeBooking",
+  async (payload, { dispatch, getState }) => {
+    await dispatch(updateTicket(payload.ghe));
+    let maLichChieu = payload.id;
+    let { listTicket } = getState().ManagementBookingSlice;
+    let { userInfo } = getState().ManagementUserSlice;
+    let taiKhoan = JSON.stringify(userInfo);
+    let danhSachGheDangDat = JSON.stringify(listTicket);
+    await connection.invoke(
+      "datGhe",
+      taiKhoan,
+      danhSachGheDangDat,
+      maLichChieu
+    );
+  }
+);
+export const { updateTicket, activeTabs, updateRealTime } =
+  ManagementBookingSlice.actions;
 
 export default ManagementBookingSlice.reducer;

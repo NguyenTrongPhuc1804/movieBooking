@@ -5,8 +5,13 @@ import { history } from "../../App";
 import { redirect } from "react-router-dom";
 import { openCustomNotificationWithIcon } from "../../util/setting/nontification";
 import { displayLoading, hiddenLoading } from "./LoadingSlice";
+import { historyUserBookTickets } from "../../core/modal/InfoBookTicket";
+let infoUser = "";
+if (localStorage.getItem(USER_INFO)) {
+  infoUser = JSON.parse(localStorage.getItem(USER_INFO));
+}
 const initialState = {
-  userInfo: {},
+  userInfo: infoUser,
   login: false,
   historyUserBookTicket: {},
 };

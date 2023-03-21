@@ -50,6 +50,7 @@ function Login() {
           <strong className="">Tài khoản:</strong>
 
           <input
+            autoComplete="on"
             onChange={formik.handleChange}
             value={formik.values.taiKhoan}
             type="text"
@@ -66,6 +67,7 @@ function Login() {
         <div className="relative mb-4" data-te-input-wrapper-init>
           <strong>Mật khẩu:</strong>
           <input
+            autoComplete="on"
             onChange={formik.handleChange}
             value={formik.values.matKhau}
             type="password"

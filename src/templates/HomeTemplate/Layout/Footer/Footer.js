@@ -1,6 +1,7 @@
 import _ from "lodash";
 import React from "react";
 import { useSelector } from "react-redux";
+import cinema from "../../../../asset/LogoCinema/cinema.png";
 
 function Footer() {
   const { listCinema } = useSelector(
@@ -15,10 +16,7 @@ function Footer() {
         <div className="container px-5 py-24 mx-auto flex md:items-center lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col">
           <div className="w-64 flex-shrink-0 md:mx-0 mx-auto text-center md:text-left md:mt-0 mt-10">
             <a className="flex title-font font-medium items-center md:justify-start justify-center ">
-              <img
-                src="https://png2.cleanpng.com/sh/15e12cd1b73db869f9a5dca9878a293e/L0KzQYm3VsI2N6d9e5H0aYP2gLBuTfNqdpZ1hNdDeD36ebb1TfF2cJDrRdVybnXzfLbBmL1kcZ9qhdN8LXPsfrb3jPV5gF5pRdRqZImwRbO6UcBmQGlmfdYBMECxRoG3VMQ3PWQ2TaQEOUS0RoW3V8E3OV91htk=/kisspng-cineplexx-wien-auhof-cineplexx-cinemas-cineplexx-d-bady-5b310e88aed600.6004465315299416407161.png"
-                alt=""
-              />
+              <img src={cinema} alt="" />
               {/* <span className="ml-3 text-xl">Tailblocks</span> */}
             </a>
             {/* <p className="mt-2 text-sm ">
@@ -26,7 +24,7 @@ function Footer() {
             </p> */}
           </div>
           <div className="flex-grow flex flex-wrap md:pr-20 -mb-10 md:text-left text-center order-first">
-            <div className="lg:w-1/4 md:w-1/2 w-full px-4">
+            <div className="lg:w-1/3 md:w-1/2 w-full px-4">
               <h2 className="title-font font-medium text-center tracking-widest text-sm mb-3">
                 ĐỐI TÁC
               </h2>
@@ -51,7 +49,7 @@ function Footer() {
                 ))}
               </nav>
             </div>
-            <div className="lg:w-1/4 md:w-1/2 w-full px-4 ">
+            <div className="lg:w-1/3 md:w-1/2 w-full px-4 ">
               <h2 className="title-font text-center font-medium  tracking-widest text-sm mb-3">
                 ỨNG DỤNG DI ĐỘNG
               </h2>
@@ -64,7 +62,7 @@ function Footer() {
                 </li>
               </nav>
             </div>
-            <div className="lg:w-1/4 md:w-1/2 w-full px-4">
+            <div className="lg:w-1/3 md:w-1/2 w-full px-4">
               <h2 className="title-font text-center font-medium  tracking-widest text-sm mb-3">
                 MẠNG XÃ HỘI
               </h2>
@@ -77,7 +75,7 @@ function Footer() {
                 </li>
               </nav>
             </div>
-            {/* <div className="lg:w-1/4 md:w-1/2 w-full px-4">
+            {/* <div className="lg:w-1/3 md:w-1/2 w-full px-4">
               <h2 className="title-font font-medium  tracking-widest text-sm mb-3">
                 CATEGORIES
               </h2>

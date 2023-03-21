@@ -56,7 +56,21 @@ export const getListFilm = createAsyncThunk("film/getListFilm", async () => {
   );
   return data;
 });
-
+// upload Film with img
+export const uploadFilm = createAsyncThunk(
+  "film/uploadFilm",
+  async (formData) => {
+    try {
+      const { data } = await requestMovie.post(
+        "QuanLyPhim/ThemPhimUploadHinh",
+        formData
+      );
+      return data;
+    } catch (err) {
+      console.log("err", err);
+    }
+  }
+);
 export const { setPhimSapChieu, setPhimDangChieu, setAllFilm } =
   ManagementFilmSlice.actions;
 

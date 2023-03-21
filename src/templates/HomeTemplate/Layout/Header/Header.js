@@ -1,15 +1,28 @@
-import React, { useState } from "react";
+import { Select } from "antd";
+import React, { useState, useTransition } from "react";
+import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, NavLink } from "react-router-dom";
 import { logOut } from "../../../../redux/reducer/ManagementUserSlice";
 import { USER_INFO } from "../../../../util/setting/config";
+import vi from "../../../../asset/imgLegion/vn.jpg";
+import en from "../../../../asset/imgLegion/en.webp";
+import cinema from "../../../../asset/LogoCinema/cinema.png";
 
 function Header() {
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
   const { login } = useSelector((state) => state.ManagementUserSlice);
   const infoUser = JSON.parse(localStorage.getItem(USER_INFO));
   const [toggle, setToggle] = useState(false);
+  const handleChange = (value) => {
+    if (value == "Tiếng việt") {
+      i18n.changeLanguage("vi");
+    } else {
+      i18n.changeLanguage("en");
+    }
+  };
   return (
     <div>
       <div className="header-2 text-white fixed mb-24 top-0 w-screen  z-10">
@@ -18,7 +31,7 @@ function Header() {
             <div className="flex  rounded-lg justify-between items-center">
               <img
                 className="w[70px] rounded-lg  h-[70px]"
-                src="https://png2.cleanpng.com/sh/15e12cd1b73db869f9a5dca9878a293e/L0KzQYm3VsI2N6d9e5H0aYP2gLBuTfNqdpZ1hNdDeD36ebb1TfF2cJDrRdVybnXzfLbBmL1kcZ9qhdN8LXPsfrb3jPV5gF5pRdRqZImwRbO6UcBmQGlmfdYBMECxRoG3VMQ3PWQ2TaQEOUS0RoW3V8E3OV91htk=/kisspng-cineplexx-wien-auhof-cineplexx-cinemas-cineplexx-d-bady-5b310e88aed600.6004465315299416407161.png"
+                src={cinema}
                 alt=""
               />
               <button
@@ -46,7 +59,7 @@ function Header() {
                     : "p-2 lg:px-4 md:mx-2  rounded hover:bg-[#ff7f50] hover:text-white transition-colors duration-300"
                 }
               >
-                Trang chủ
+                {t("Home")}
               </NavLink>
               <NavLink
                 to="/2"
@@ -56,7 +69,7 @@ function Header() {
                     : "p-2 lg:px-4 md:mx-2  rounded hover:bg-[#ff7f50] hover:text-white transition-colors duration-300"
                 }
               >
-                About
+                {t("About")}
               </NavLink>
               <NavLink
                 to="/2"
@@ -70,7 +83,9 @@ function Header() {
               </NavLink>
               {localStorage.getItem(USER_INFO) ? (
                 <div className="flex items-center justify-between">
-                  <p className="p-2">Xin chào {infoUser.hoTen}!!</p>
+                  <p className="p-2">
+                    {t("Hello")} {infoUser.hoTen}!!
+                  </p>
                   <button
                     onClick={() => {
                       dispatch(logOut());
@@ -79,25 +94,52 @@ function Header() {
                     // to="/"
                     className="p-2 lg:px-4 md:mx-2  text-center border border-solid border-[#ff7f50] rounded hover:bg-[#ff7f50] hover:text-white transition-colors duration-300 mt-1 md:mt-0 md:ml-1"
                   >
-                    Đăng xuất
+                    {t("Log out")}
                   </button>
                 </div>
               ) : (
-                <div className="span flex ">
+                <div className="span flex justify-between">
                   <NavLink
                     to="login/sign-in"
                     className="p-2 lg:px-4 md:mx-2  rounded hover:bg-[#ff7f50] hover:text-white transition-colors duration-300"
                   >
-                    Đăng nhập
+                    {t("Login")}
                   </NavLink>
                   <NavLink
                     to="login/signUp"
                     className="p-2 lg:px-4 md:mx-2  text-center border border-solid border-[#ff7f50] rounded hover:bg-[#ff7f50] hover:text-white transition-colors duration-300 mt-1 md:mt-0 md:ml-1"
                   >
-                    Đăng ký
+                    {t("Sign up")}
                   </NavLink>
                 </div>
               )}
+              <Select
+                defaultValue="Tiếng việt"
+                style={{
+                  width: 120,
+                }}
+                onChange={handleChange}
+                options={[
+                  {
+                    value: "Tiếng việt",
+                    label: (
+                      <div className="flex items-center justify-between">
+                        <p>Tiếng việt</p>
+                        <img className="w-5 h-4" src={vi} alt="" />
+                      </div>
+                    ),
+                  },
+                  {
+                    value: "English",
+                    label: (
+                      <div className="flex items-center justify-between">
+                        <p>English</p>
+                        <img className="w-5 h-4" src={en} alt="" />
+                      </div>
+                    ),
+                  },
+                ]}
+              />
             </div>
           </div>
         </nav>

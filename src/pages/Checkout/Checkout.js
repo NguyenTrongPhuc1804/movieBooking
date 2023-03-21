@@ -5,6 +5,8 @@ import {
   activeTabs,
   bookingTicket,
   getInfoRoom,
+  realTimeBooking,
+  updateRealTime,
   updateTicket,
 } from "../../redux/reducer/ManagementBookingSlice";
 import { USER_INFO } from "../../util/setting/config";
@@ -13,18 +15,27 @@ import _ from "lodash";
 import { Tabs } from "antd";
 import { getHistoryUserBookTicket } from "../../redux/reducer/ManagementUserSlice";
 import moment from "moment";
+import { connection } from "../..";
 function Checkout(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
-  console.log(id);
-  const { infoRoom, listTicket, errorMessage, reloadPage } = useSelector(
-    (state) => state.ManagementBookingSlice
-  );
+  // console.log(id);
+  const {
+    infoRoom,
+    listTicket,
+    errorMessage,
+    reloadPage,
+    listOtherUserBooking,
+  } = useSelector((state) => state.ManagementBookingSlice);
   const { userInfo } = useSelector((state) => state.ManagementUserSlice);
   const infoUser = JSON.parse(localStorage.getItem(USER_INFO));
   useEffect(() => {
     dispatch(getInfoRoom(id));
+    // load list seat from server
+    connection.on("loadDanhSachGheDaDat", (listSeat) => {
+      dispatch(updateRealTime(listSeat));
+    });
   }, []);
   useEffect(() => {
     if (reloadPage) {
@@ -38,9 +49,14 @@ function Checkout(props) {
   const renderGhe = () =>
     infoRoom.danhSachGhe?.map((ghe, idx) => {
       let index = listTicket.findIndex((gheDD) => gheDD.maGhe === ghe.maGhe);
+      let indexRealTime = listOtherUserBooking.findIndex(
+        (gheDD) => gheDD.maGhe === ghe.maGhe
+      );
+
       let classUserBooking = "";
       let classUserBooked = "";
       let classChoseTicket = "";
+      let classRealTime = "";
       if (index !== -1) {
         classChoseTicket = "bg-[#5D9C59] text-white";
       }
@@ -53,18 +69,22 @@ function Checkout(props) {
       ) {
         classUserBooking = "bg-[#865DFF]";
       }
+      if (indexRealTime != -1) {
+        classRealTime = "bg-[#D09CFA]";
+      }
       return (
         <Fragment key={idx}>
           <button
             onClick={() => {
-              dispatch(updateTicket(ghe));
+              // dispatch(updateTicket(ghe,id));
+              dispatch(realTimeBooking({ ghe, id }));
             }}
-            disabled={ghe.daDat}
+            disabled={ghe.daDat || classRealTime !== ""}
             className={
               ghe.loaiGhe === "Thuong"
-                ? `w-[35px] h-[35px] m-1 ${classUserBooking}  ${classUserBooked}  
+                ? `w-[35px] h-[35px] m-1 ${classRealTime} ${classUserBooking}  ${classUserBooked}  
              text-center ${classChoseTicket}  rounded-lg border border-gray-700  `
-                : ` ${classUserBooked}   ${classUserBooking} w-[35px] h-[35px] m-1  text-center rounded-lg   border-4 border-red-900 ${classChoseTicket}  ${classUserBooking} `
+                : ` ${classUserBooked}  ${classRealTime}  ${classUserBooking} w-[35px] h-[35px] m-1  text-center rounded-lg   border-4 border-red-900 ${classChoseTicket}  ${classUserBooking} `
             }
           >
             {ghe.daDat ? (
@@ -82,8 +102,8 @@ function Checkout(props) {
       );
     });
   return (
-    <div className="grid grid-cols-12 content-center h-[100%] ">
-      <div className="col-span-full lg:col-span-9 text-white ">
+    <div className="grid grid-cols-12  h-[100%]  ">
+      <div className="col-span-full lg:col-span-9  text-white ">
         <div className="bg-[#f26b38] p-5">
           <h1 className="text-3xl ">Chọn ghế</h1>
           <div className=" bg-white  text-gray-700 text-left lg:text-center    overflow-auto p-9">
@@ -125,7 +145,7 @@ function Checkout(props) {
           </div>
           <div className="border-b-2  border-gray-500 py-3 ">
             <img
-              className="w-[50%] py-2 mx-auto  h-[250px]"
+              className="w-[50%] py-2 mx-auto  h-[200px]"
               src={infoRoom.thongTinPhim?.hinhAnh}
               alt=""
             />
@@ -197,6 +217,7 @@ function Bookingresults(props) {
   const { historyUserBookTicket } = useSelector(
     (state) => state.ManagementUserSlice
   );
+  console.log(historyUserBookTicket.thongTinDatVe);
   console.log(historyUserBookTicket);
   useEffect(() => {
     dispatch(getHistoryUserBookTicket());
@@ -238,6 +259,7 @@ function Bookingresults(props) {
               <p className="">
                 <strong>Tên rạp</strong> {seat.tenCumRap}
               </p>
+              <p></p>
               <p>
                 <strong> Ghế :</strong>
                 {ticket.danhSachGhe.slice(0, 3).map((ghe, idx) => {
@@ -282,28 +304,28 @@ function Bookingresults(props) {
     </div>
   );
 }
-const items = [
-  {
-    key: "1",
-    label: `01 CHỌN GHẾ & THANH TOÁN`,
-    children: <Checkout />,
-  },
-  {
-    key: "2",
-    label: `02 KẾT QUẢ ĐẶT VÉ`,
-    children: <Bookingresults />,
-  },
-];
+
 export default function (props) {
   const dispatch = useDispatch();
   const { ActiveTabs } = useSelector((state) => state.ManagementBookingSlice);
-
+  const items = [
+    {
+      key: "1",
+      label: `01 CHỌN GHẾ & THANH TOÁN`,
+      children: <Checkout {...props} />,
+    },
+    {
+      key: "2",
+      label: `02 KẾT QUẢ ĐẶT VÉ`,
+      children: <Bookingresults {...props} />,
+    },
+  ];
   return (
-    <div className="bg-[#3f3f3f] p-5">
+    <div className="bg-[#3f3f3f] p-5 mt-[6rem]">
       <Tabs
         className=" "
         size="large"
-        // defaultActiveKey="1"
+        defaultActiveKey="1"
         activeKey={ActiveTabs}
         items={items}
         onChange={(key) => {
