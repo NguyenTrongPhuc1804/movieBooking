@@ -7,6 +7,8 @@ import { history } from "../../App";
 import { redirect, useNavigate } from "react-router-dom";
 import { USER_INFO } from "../../util/setting/config";
 import { Alert } from "antd";
+import cinema from "../../asset/LogoCinema/cinema.png";
+
 function Login() {
   const navigate = useNavigate();
 
@@ -37,11 +39,7 @@ function Login() {
     <form onSubmit={formik.handleSubmit} className="px-4 md:px-0 lg:w-6/12">
       <div className="md:mx-6 md:p-12">
         <div className="text-center">
-          <img
-            className="mx-auto w-48"
-            src="https://png2.cleanpng.com/sh/15e12cd1b73db869f9a5dca9878a293e/L0KzQYm3VsI2N6d9e5H0aYP2gLBuTfNqdpZ1hNdDeD36ebb1TfF2cJDrRdVybnXzfLbBmL1kcZ9qhdN8LXPsfrb3jPV5gF5pRdRqZImwRbO6UcBmQGlmfdYBMECxRoG3VMQ3PWQ2TaQEOUS0RoW3V8E3OV91htk=/kisspng-cineplexx-wien-auhof-cineplexx-cinemas-cineplexx-d-bady-5b310e88aed600.6004465315299416407161.png"
-            alt="logo"
-          />
+          <img className="mx-auto w-48" src={cinema} alt="logo" />
           <h4 className="mt-1 mb-12 pb-1 text-xl font-semibold">
             Vui lòng đăng nhập để tiếp tục
           </h4>

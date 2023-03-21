@@ -75,6 +75,12 @@ export const loginUser = createAsyncThunk(
       return data;
     } catch (err) {
       console.log(err);
+      openCustomNotificationWithIcon(
+        "error",
+        "Đăng nhập thất bại",
+        "Sai tài khoản hoặc mật khẩu",
+        "topRight"
+      );
       dispatch(hiddenLoading());
 
       return err;

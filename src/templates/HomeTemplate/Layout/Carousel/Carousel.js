@@ -26,6 +26,7 @@ function Carousel() {
   return (
     <div className="pt-[6rem] ">
       <Swiper
+        centeredSlides={true}
         // navigation={true}
         breakpoints={{
           200: {
@@ -54,20 +55,21 @@ function Carousel() {
           <SwiperSlide
             className="  "
             key={idx}
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              // padding: "0 10px",
-
-              // backgroundSize: "contain",
-              // backgroundPosition: "center",
-              // backgroundRepeat: "no-repeat",
-              // backgroundImage: `url(${img.hinhAnh})`,
-            }}
+            style={
+              {
+                // width: "100%",
+                // height: "100%",
+                // objectFit: "cover",
+                // padding: "0 10px",
+                // backgroundSize: "contain",
+                // backgroundPosition: "center",
+                // backgroundRepeat: "no-repeat",
+                // backgroundImage: `url(${img.hinhAnh})`,
+              }
+            }
           >
             <img
-              className="mx- h-[350px] sm:h-[600px]  w-full"
+              className=" h-[350px] sm:h-[600px]  w-full"
               src={img.hinhAnh}
               alt=""
             />

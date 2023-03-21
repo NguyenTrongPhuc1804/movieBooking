@@ -17,9 +17,14 @@ import {
 import { useState } from "react";
 import { useFormik } from "formik";
 import moment from "moment";
+import { useDispatch } from "react-redux";
+import { upload } from "@testing-library/user-event/dist/upload";
+import { uploadFilm } from "../../../redux/reducer/ManagementFilmSlice";
+import { groupId } from "../../../util/setting/config";
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
 function AddNew() {
+  const dispatch = useDispatch();
   const [componentDisabled, setComponentDisabled] = useState(false);
   const [imgSrc, setImgSrc] = useState("");
   const formik = useFormik({
@@ -33,9 +38,18 @@ function AddNew() {
       hot: false,
       danhGia: 0,
       hinhAnh: {},
+      maNhom: groupId,
     },
-    onSubmit: (value) => {
-      console.log(value);
+    onSubmit: (values) => {
+      let formData = new FormData();
+      for (let key in values) {
+        if (key !== "hinhAnh") {
+          formData.append(key, values[key]);
+        } else {
+          formData.append("File", values.hinhAnh, values.hinhAnh.name);
+        }
+      }
+      dispatch(uploadFilm(formData));
     },
   });
 
@@ -61,7 +75,9 @@ function AddNew() {
   };
   return (
     <>
+      <h1 className="text-2xl text-center font-bold my-4">Thêm Phim</h1>
       <Form
+        className="w-full "
         onSubmitCapture={formik.handleSubmit}
         labelCol={{
           span: 4,
@@ -122,11 +138,14 @@ function AddNew() {
           />
           <img className="w-52 h-52 mt-2" src={imgSrc} alt="..." />
         </Form.Item>
-        <Form.Item label="">
-          <Button htmlType="submit" className="bg-blue-500 text-white">
+        <div className="text-center w-full">
+          <button
+            type="submit"
+            className="bg-blue-500  text-white py-2 px-4 mt-8 hover:scale-110 transition-all rounded-md"
+          >
             Thêm phim
-          </Button>
-        </Form.Item>
+          </button>
+        </div>
       </Form>
     </>
   );

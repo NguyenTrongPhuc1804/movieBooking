@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { Await } from "react-router-dom";
 import requestMovie from "../../services/servicesReques";
 import repuestMovie from "../../services/servicesReques";
+import { displayLoading, hiddenLoading } from "./LoadingSlice";
 
 const initialState = {
   listFilm: [],
@@ -31,6 +32,7 @@ export const ManagementFilmSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    // get list film
     builder.addCase(getListFilm.fulfilled, (state, action) => {
       state.isLoading = false;
 
@@ -44,6 +46,10 @@ export const ManagementFilmSlice = createSlice({
     builder.addCase(getListFilm.rejected, (state, action) => {
       state.isLoading = false;
       state.errorMessage = action.payload.message;
+    });
+    // upload film
+    builder.addCase(uploadFilm.fulfilled, (state, action) => {
+      console.log("action", action);
     });
   },
 });
@@ -59,15 +65,21 @@ export const getListFilm = createAsyncThunk("film/getListFilm", async () => {
 // upload Film with img
 export const uploadFilm = createAsyncThunk(
   "film/uploadFilm",
-  async (formData) => {
+  async (formData, { dispatch }) => {
+    dispatch(displayLoading());
     try {
       const { data } = await requestMovie.post(
         "QuanLyPhim/ThemPhimUploadHinh",
         formData
       );
+      console.log(data);
+      dispatch(hiddenLoading());
       return data;
     } catch (err) {
+      dispatch(hiddenLoading());
+
       console.log("err", err);
+      return err;
     }
   }
 );
