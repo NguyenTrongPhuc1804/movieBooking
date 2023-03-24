@@ -4,7 +4,9 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getListFilm } from "../../redux/reducer/ManagementFilmSlice";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 function Film() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { listFilmDefault } = useSelector((state) => state.ManagementFilmSlice);
   console.log(listFilmDefault);
@@ -22,7 +24,7 @@ function Film() {
       width: "10%",
 
       dataIndex: "maPhim",
-      sorter: (a, b) => a.maPhim - b.maPhim,
+      // sorter: (a, b) => a.maPhim - b.maPhim,
       //   sortOrder: "descend ",
     },
     {
@@ -53,7 +55,13 @@ function Film() {
       render: (text, record) => {
         return (
           <div className="">
-            <Button className="h-[40px] bg-[#1677ff] mr-3" type="primary">
+            <Button
+              onClick={() => {
+                navigate(`edit/${record.maPhim}`);
+              }}
+              className="h-[40px] bg-[#1677ff] mr-3"
+              type="primary"
+            >
               <EditOutlined />
             </Button>
             <Button className="h-[40px]  " danger type="primary">
@@ -68,7 +76,7 @@ function Film() {
   return (
     <>
       <h1 className="text-4xl font-bold">Quản lý phim</h1>
-      <div className="w-[500px] bg-[#1677ff] my-6 rounded-lg  ">
+      <div className="max-w-[500px] bg-[#1677ff] my-6 rounded-lg  ">
         <Search
           placeholder="Tìm phim"
           allowClear

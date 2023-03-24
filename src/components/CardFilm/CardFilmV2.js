@@ -1,32 +1,51 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export default function CardFilmV2(props) {
+  const navigate = useNavigate();
   const { film } = props;
+  console.log(film);
   return (
-    <div className="w-full max-w-sm overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800">
+    <div
+      style={{ cursor: "pointer" }}
+      onClick={() => {
+        navigate(`detail/${film.maPhim}`);
+      }}
+      className="relative w-full font-bold max-w-sm overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800"
+    >
       <img
-        className="object-cover object-center w-full h-[20px]"
+        className="object-cover object-center w-full h-[150px]"
         src={film.hinhAnh}
         alt="avatar"
-      />
+      ></img>
+      <div className="absolute top-0 left-0 w-[40px] bg-[#EA5455] text-center text-white">
+        Hot
+      </div>
+
       <div className="flex  w-[100%]   items-center px-6 py-3 bg-gray-900">
         <i className="fa-solid fa-film text-white text-xl" />
-        <h1 className="mx-3 w-[90%] truncate ... text-lg font-semibold text-white ">
+        <h1 className="mx-3 w-[90%] truncate ... text-sm font-semibold text-white ">
           {film.tenPhim}
         </h1>
       </div>
-      <div className="px-6 py-4">
-        <h2 className="text-lg font-semibold text-gray-800 dark:text-white ">
-          Nội dung phim và review
+      <div className="px-6 py-4 flex flex-col justify-around">
+        <h2 className="text-lg mb-2 font-semibold text-gray-800 dark:text-white ">
+          Đánh giá:
         </h2>
-        <p className=" h-[100px] py-2 text-gray-700 dark:text-gray-400">
+        {/* <p className=" h-[100px] py-2 text-gray-700 dark:text-gray-400">
           {film.moTa.length > 100 ? (
             <p>{film.moTa.slice(0, 100)}...</p>
           ) : (
             <p>{film.moTa}</p>
           )}
-        </p>
+        </p> */}
+        <button className="bg-orange-400 py-2 px-4 rounded-lg text-white hover:scale-110 transition-all">
+          <i class="fas fa-thumbs-up"></i> {film.danhGia * 10}%
+        </button>
+        <button className="hover:bg-orange-400 border-orange-500 border py-2 mt-2 px-4 rounded-lg text-white hover:scale-110 transition-all">
+          Đặt vé
+        </button>
         {/* <div className="flex items-center mt-4 text-gray-700 dark:text-gray-200">
         <svg
           aria-label="suitcase icon"

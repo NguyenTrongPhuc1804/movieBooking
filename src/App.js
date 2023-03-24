@@ -25,6 +25,7 @@ import "./i18n";
 import AdminTemplate from "./templates/AdminTemplate/AdminTemplate";
 import Film from "./pages/Film/Film";
 import AddNew from "./pages/Film/AddNew/AddNew";
+import EditFilm from "./pages/Film/EditFilm/EditFilm";
 export const history = createBrowserHistory();
 const CheckoutTemplateLazy = lazy(() =>
   import("./templates/CheckoutTemplate/CheckoutTemplate")
@@ -51,6 +52,7 @@ function App() {
             <Route path="" element={<Film />}></Route>
             <Route path="film" element={<Film />}></Route>
             <Route path="film/add-new" element={<AddNew />} />
+            <Route path="film/edit/:id" element={<EditFilm />} />
           </Route>
         </Routes>
       </BrowserRouter>

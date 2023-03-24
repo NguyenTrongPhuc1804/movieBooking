@@ -160,7 +160,7 @@ function Detail(props) {
               alt=""
             />
 
-            <div className="text-white py-4 lg:py-0 px-8">
+            <div className="text-white py-4 flex flex-col lg:py-0 px-8">
               <p className="text-lg ">
                 {moment(filmDetail.ngayKhoiChieu).format("YYYY/MM/DD")}
               </p>
@@ -172,9 +172,11 @@ function Detail(props) {
               </div>
 
               {filmDetail.moTa?.length > 200 ? (
-                <p className="w-[250px]">{filmDetail.moTa.slice(0, 200)}...</p>
+                <p className=" w-[270px] ">
+                  {filmDetail.moTa.slice(0, 200)}...
+                </p>
               ) : (
-                <p className="w-[250px]">{filmDetail.moTa}</p>
+                <p className="w-[270px] ">{filmDetail.moTa}</p>
               )}
             </div>
           </div>

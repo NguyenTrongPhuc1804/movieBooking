@@ -9,6 +9,7 @@ const initialState = {
   listFilmDefault: [],
   dangChieu: true,
   sapChieu: true,
+  filmEdit: {},
 };
 
 export const ManagementFilmSlice = createSlice({
@@ -51,6 +52,11 @@ export const ManagementFilmSlice = createSlice({
     builder.addCase(uploadFilm.fulfilled, (state, action) => {
       console.log("action", action);
     });
+    // edit film
+    builder.addCase(editFilm.fulfilled, (state, action) => {
+      const { content } = action.payload;
+      state.filmEdit = content;
+    });
   },
 });
 
@@ -71,6 +77,25 @@ export const uploadFilm = createAsyncThunk(
       const { data } = await requestMovie.post(
         "QuanLyPhim/ThemPhimUploadHinh",
         formData
+      );
+      console.log(data);
+      dispatch(hiddenLoading());
+      return data;
+    } catch (err) {
+      dispatch(hiddenLoading());
+
+      console.log("err", err);
+      return err;
+    }
+  }
+);
+export const editFilm = createAsyncThunk(
+  "film/editFilm",
+  async (id, { dispatch }) => {
+    dispatch(displayLoading());
+    try {
+      const { data } = await requestMovie.get(
+        `QuanLyPhim/LayThongTinPhim?MaPhim=${id}`
       );
       console.log(data);
       dispatch(hiddenLoading());

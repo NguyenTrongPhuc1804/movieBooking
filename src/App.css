@@ -225,3 +225,9 @@ body {
 .ant-switch {
   background: rgba(0, 0, 0, 0.45);
 }
+.card__thumb {
+  height: 200px;
+  overflow: hidden;
+  background-color: #000;
+  transition: height 0.5s;
+}

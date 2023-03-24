@@ -13,7 +13,7 @@ export default function CardFilm(props) {
       className="card rounded-lg "
     >
       <header className="card__thumb">
-        <img src={film.hinhAnh} />
+        <img className="" src={film.hinhAnh} />
       </header>
       {/* <date className="card__date">
         <span className="card__date__day">11</span>

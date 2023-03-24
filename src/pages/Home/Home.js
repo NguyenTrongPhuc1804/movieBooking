@@ -19,6 +19,7 @@ import {
 } from "../../redux/reducer/ManagementFilmSlice";
 import { getOPhim } from "../../redux/reducer/CarouselSlice";
 import CardFilmV2 from "../../components/CardFilm/CardFilmV2";
+import CardFilmV3 from "../../components/CardFilm/CardFilmV3";
 import { getListInfoCinema } from "../../redux/reducer/ManagementCinemaSilce";
 import ResponsiveDivice from "../../util/setting/responsiveDivice";
 function Home() {
@@ -28,6 +29,7 @@ function Home() {
   const { listCinema } = useSelector(
     (state) => state.ManagementInfoCinemaSlice
   );
+  console.log(listFilm);
   useEffect(() => {
     dispatch(getListFilm("asd"));
     dispatch(getListInfoCinema());
@@ -39,6 +41,15 @@ function Home() {
         <CardFilm film={item} />
       </SwiperSlide>
     ));
+  const renderFilmHot = () => {
+    return listFilm
+      .filter((film) => film.hot === true)
+      .map((item, idx) => (
+        <SwiperSlide key={idx}>
+          <CardFilmV2 film={item} />
+        </SwiperSlide>
+      ));
+  };
   return (
     <div className="bg-[#3f3f3f]">
       <Carousel />
@@ -116,7 +127,56 @@ function Home() {
       >
         {renderFilm()}
       </Swiper>
+      <div className="">
+        <h1 className="text-2xl text-center text-white">Phim hot</h1>
+        <Swiper
+          style={{
+            width: "80%",
+            padding: "25px",
+          }}
+          slidesPerView={4}
+          breakpoints={{
+            200: {
+              centeredSlides: false,
 
+              slidesPerView: 2,
+              grid: {
+                rows: 2,
+                fill: "row",
+              },
+            },
+            640: {
+              slidesPerView: 2.2,
+            },
+            769: {
+              slidesPerView: 2.2,
+            },
+            1024: {
+              slidesPerView: 5,
+            },
+          }}
+          grid={{
+            rows: 2,
+            fill: "row",
+          }}
+          speed={800}
+          // centeredSlides={true}
+          loop={true}
+          autoplay={{
+            delay: 4500,
+            disableOnInteraction: false,
+          }}
+          spaceBetween={30}
+          // navigation={true}
+          pagination={{
+            dynamicBullets: true,
+          }}
+          modules={[Grid, Pagination, Navigation, Autoplay]}
+          className="mySwiper "
+        >
+          {renderFilmHot()}
+        </Swiper>
+      </div>
       <HomeMenu listInfoCinema={listCinema} />
       <div className="">
         <Outlet />
