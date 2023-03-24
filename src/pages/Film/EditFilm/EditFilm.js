@@ -14,6 +14,7 @@ import {
   TreeSelect,
   Upload,
 } from "antd";
+// import DatePicker from "react-datepicker";
 import { useState } from "react";
 import { useFormik } from "formik";
 import moment from "moment";
@@ -29,6 +30,7 @@ import dayjs, { Dayjs } from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
+dayjs.extend(customParseFormat);
 function EditFilm() {
   const dispatch = useDispatch();
   const { filmEdit } = useSelector((state) => state.ManagementFilmSlice);
@@ -131,10 +133,10 @@ function EditFilm() {
             name="ngayKhoiChieu"
             id="ngayKhoiChieu"
             onChange={(e) => {
-              let ngayKhoiChieu = moment(e).format("DD-MM-YYYY");
+              let ngayKhoiChieu = dayjs(e);
               formik.setFieldValue("ngayKhoiChieu", ngayKhoiChieu);
             }}
-            defaultValue={moment(formik.values.ngayKhoiChieu)}
+            value={dayjs(formik.values.ngayKhoiChieu)}
           />
         </Form.Item>
         <Form.Item label="Đang chiếu">
