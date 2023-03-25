@@ -22,6 +22,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { upload } from "@testing-library/user-event/dist/upload";
 import {
   editFilm,
+  editUploadFilm,
+  getEditFilm,
   uploadFilm,
 } from "../../../redux/reducer/ManagementFilmSlice";
 import { groupId } from "../../../util/setting/config";
@@ -34,12 +36,14 @@ dayjs.extend(customParseFormat);
 function EditFilm() {
   const dispatch = useDispatch();
   const { filmEdit } = useSelector((state) => state.ManagementFilmSlice);
+  console.log(filmEdit);
   let { id } = useParams();
   const [componentDisabled, setComponentDisabled] = useState(false);
   const [imgSrc, setImgSrc] = useState("");
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
+      maPhim: filmEdit.maPhim,
       tenPhim: filmEdit.tenPhim,
       trailer: filmEdit.trailer,
       moTa: filmEdit.moTa,
@@ -49,6 +53,7 @@ function EditFilm() {
       hot: filmEdit.hot,
       danhGia: filmEdit.danhGia,
       hinhAnh: null,
+      maNhom: filmEdit.maNhom,
     },
     onSubmit: (values) => {
       let formData = new FormData();
@@ -56,14 +61,14 @@ function EditFilm() {
         if (key !== "hinhAnh") {
           formData.append(key, values[key]);
         } else {
-          formData.append("File", values.hinhAnh, values.hinhAnh.name);
+          if (values.hinhAnh !== null) {
+            formData.append("File", values.hinhAnh, values.hinhAnh.name);
+          }
         }
       }
-      dispatch(uploadFilm(formData));
+      dispatch(editUploadFilm(formData));
     },
   });
-  const dateFormat = "DD/MM/YYYY";
-  console.log("nkc1", formik.values);
 
   const handleChangeSwitch = (name) => {
     return (value) => {
@@ -86,7 +91,7 @@ function EditFilm() {
     };
   };
   useEffect(() => {
-    dispatch(editFilm(id));
+    dispatch(getEditFilm(id));
   }, []);
   return (
     <>
@@ -162,7 +167,7 @@ function EditFilm() {
         </Form.Item>
         <Form.Item label="Đánh giá">
           <InputNumber
-            onChange={handleChangeNumber("soSao")}
+            onChange={handleChangeNumber("danhGia")}
             min={1}
             max={10}
             value={formik.values.danhGia}

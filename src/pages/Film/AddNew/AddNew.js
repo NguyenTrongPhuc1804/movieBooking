@@ -19,7 +19,10 @@ import { useFormik } from "formik";
 import moment from "moment";
 import { useDispatch } from "react-redux";
 import { upload } from "@testing-library/user-event/dist/upload";
-import { uploadFilm } from "../../../redux/reducer/ManagementFilmSlice";
+import {
+  addFilm,
+  uploadFilm,
+} from "../../../redux/reducer/ManagementFilmSlice";
 import { groupId } from "../../../util/setting/config";
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
@@ -52,7 +55,7 @@ function AddNew() {
       dispatch(uploadFilm(formData));
     },
   });
-
+  console.log(formik.values.danhGia);
   const handleChangeSwitch = (name) => {
     return (value) => {
       formik.setFieldValue(name, value);
@@ -122,7 +125,7 @@ function AddNew() {
         </Form.Item>
         <Form.Item label="Đánh giá">
           <InputNumber
-            onChange={handleChangeNumber("soSao")}
+            onChange={handleChangeNumber("danhGia")}
             min={1}
             max={10}
           />

@@ -1,7 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 import { Await } from "react-router-dom";
 import requestMovie from "../../services/servicesReques";
 import repuestMovie from "../../services/servicesReques";
+import { ACCESS_TOKEN, DOMAIN } from "../../util/setting/config";
+import { openCustomNotificationWithIcon } from "../../util/setting/nontification";
 import { displayLoading, hiddenLoading } from "./LoadingSlice";
 
 const initialState = {
@@ -52,10 +55,14 @@ export const ManagementFilmSlice = createSlice({
     builder.addCase(uploadFilm.fulfilled, (state, action) => {
       console.log("action", action);
     });
-    // edit film
-    builder.addCase(editFilm.fulfilled, (state, action) => {
+    // get data edit page film
+    builder.addCase(getEditFilm.fulfilled, (state, action) => {
       const { content } = action.payload;
       state.filmEdit = content;
+    });
+    //Edit upload film
+    builder.addCase(editUploadFilm.fulfilled, (state, action) => {
+      console.log(action);
     });
   },
 });
@@ -68,7 +75,7 @@ export const getListFilm = createAsyncThunk("film/getListFilm", async () => {
   );
   return data;
 });
-// upload Film with img
+// add Film with img
 export const uploadFilm = createAsyncThunk(
   "film/uploadFilm",
   async (formData, { dispatch }) => {
@@ -78,7 +85,39 @@ export const uploadFilm = createAsyncThunk(
         "QuanLyPhim/ThemPhimUploadHinh",
         formData
       );
-      console.log(data);
+      // console.log(data);
+      openCustomNotificationWithIcon(
+        "success",
+        "Thêm phim thành công",
+        "",
+        "topRight"
+      );
+      dispatch(hiddenLoading());
+      return data;
+    } catch (err) {
+      dispatch(hiddenLoading());
+      openCustomNotificationWithIcon(
+        "success",
+        "Thêm phim thất bại",
+        "",
+        "topRight"
+      );
+      console.log("err", err);
+      return err;
+    }
+  }
+);
+//get data detail film from edit page admin
+export const getEditFilm = createAsyncThunk(
+  "film/editFilm",
+  async (id, { dispatch }) => {
+    dispatch(displayLoading());
+    try {
+      const { data } = await requestMovie.get(
+        `QuanLyPhim/LayThongTinPhim?MaPhim=${id}`
+      );
+      // console.log(data);
+
       dispatch(hiddenLoading());
       return data;
     } catch (err) {
@@ -89,15 +128,18 @@ export const uploadFilm = createAsyncThunk(
     }
   }
 );
-export const editFilm = createAsyncThunk(
-  "film/editFilm",
-  async (id, { dispatch }) => {
+//edit upload film from edit page
+export const editUploadFilm = createAsyncThunk(
+  "film/editUploadFilm",
+  async (formData, { dispatch }) => {
     dispatch(displayLoading());
     try {
-      const { data } = await requestMovie.get(
-        `QuanLyPhim/LayThongTinPhim?MaPhim=${id}`
+      const { data } = await requestMovie.post(
+        `QuanLyPhim/CapNhatPhimUpload`,
+        formData
       );
-      console.log(data);
+      // console.log(data);
+
       dispatch(hiddenLoading());
       return data;
     } catch (err) {

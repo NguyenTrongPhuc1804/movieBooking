@@ -56,6 +56,7 @@ function Film() {
         return (
           <div className="">
             <Button
+              size="default"
               onClick={() => {
                 navigate(`edit/${record.maPhim}`);
               }}
@@ -64,7 +65,7 @@ function Film() {
             >
               <EditOutlined />
             </Button>
-            <Button className="h-[40px]  " danger type="primary">
+            <Button size="default" className="h-[40px]  " danger type="primary">
               <DeleteOutlined />
             </Button>
           </div>

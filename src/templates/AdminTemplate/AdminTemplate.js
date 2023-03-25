@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import { AlignLeftOutlined } from "@ant-design/icons";
 function AdminTemplate() {
@@ -6,6 +6,7 @@ function AdminTemplate() {
     navFilm: 0,
     infoUser: false,
   });
+
   console.log(dropDown.infoUser);
   return (
     <>
@@ -303,8 +304,8 @@ function AdminTemplate() {
             </ul>
           </div>
         </aside>
-        <div className="p-4 sm:ml-64">
-          <div className="p-4 border-2   mt-14">
+        <div className="p-0 sm:p-4 sm:ml-64">
+          <div className="p-0 sm:p-4 border-2   mt-14">
             <Outlet />
           </div>
         </div>
