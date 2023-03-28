@@ -25,7 +25,7 @@ export default function CardFilmV2(props) {
 
       <div className="flex  w-[100%]   items-center px-6 py-3 bg-gray-900">
         <i className="fa-solid fa-film text-white text-xl" />
-        <h1 className="mx-3 w-[90%] truncate ... text-sm font-semibold text-white ">
+        <h1 className="mx-3  w-[90%] truncate ... text-xs sm:text-sm font-semibold text-white ">
           {film.tenPhim}
         </h1>
       </div>

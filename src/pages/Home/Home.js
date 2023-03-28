@@ -92,7 +92,7 @@ function Home() {
 
             slidesPerView: 1.2,
             grid: {
-              rows: 2,
+              rows: 1,
               fill: "row",
             },
           },
@@ -131,8 +131,8 @@ function Home() {
         <h1 className="text-4xl font-bold text-center text-white">Phim hot</h1>
         <Swiper
           style={{
-            width: "80%",
-            padding: "25px",
+            width: "100%",
+            padding: "5%",
           }}
           slidesPerView={4}
           breakpoints={{
@@ -141,7 +141,7 @@ function Home() {
 
               slidesPerView: 2,
               grid: {
-                rows: 2,
+                rows: 1,
                 fill: "row",
               },
             },
