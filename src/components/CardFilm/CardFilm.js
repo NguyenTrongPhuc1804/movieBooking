@@ -8,7 +8,7 @@ export default function CardFilm(props) {
     <article
       style={{ cursor: "pointer" }}
       onClick={() => {
-        navigate(`detail/${film.maPhim}`);
+        navigate(`/detail/${film.maPhim}`);
       }}
       className="card rounded-lg "
     >

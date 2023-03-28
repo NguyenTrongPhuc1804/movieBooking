@@ -24,9 +24,12 @@ import {
   uploadFilm,
 } from "../../../redux/reducer/ManagementFilmSlice";
 import { groupId } from "../../../util/setting/config";
+import dayjs from "dayjs";
+import { useNavigate } from "react-router-dom";
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
 function AddNew() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [componentDisabled, setComponentDisabled] = useState(false);
   const [imgSrc, setImgSrc] = useState("");
@@ -52,10 +55,11 @@ function AddNew() {
           formData.append("File", values.hinhAnh, values.hinhAnh.name);
         }
       }
+      console.log(values);
       dispatch(uploadFilm(formData));
+      navigate("/admin/film");
     },
   });
-  console.log(formik.values.danhGia);
   const handleChangeSwitch = (name) => {
     return (value) => {
       formik.setFieldValue(name, value);
@@ -66,20 +70,20 @@ function AddNew() {
       formik.setFieldValue(name, value);
     };
   };
-  const handleChangeUpload = (e) => {
+  const handleChangeUpload = async (e) => {
     let file = e.target.files[0];
-    formik.setFieldValue("hinhAnh", file);
+    await formik.setFieldValue("hinhAnh", file);
     let reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = (e) => {
-      console.log("asd", e.target.result);
       setImgSrc(e.target.result);
     };
   };
   return (
     <>
-      <h1 className="text-2xl text-center font-bold my-4">Thêm Phim</h1>
+      <h1 className="text-4xl text-center font-bold my-4">Thêm Phim</h1>
       <Form
+        size="large"
         className="w-full mx-auto"
         onSubmitCapture={formik.handleSubmit}
         labelCol={{
@@ -108,8 +112,7 @@ function AddNew() {
             format={"DD/MM/YYYY"}
             name="ngayKhoiChieu"
             onChange={(e) => {
-              let ngayKhoiChieu = moment(e).format("DD/MM/YYYY");
-
+              let ngayKhoiChieu = dayjs(e).format("DD/MM/YYYY");
               formik.setFieldValue("ngayKhoiChieu", ngayKhoiChieu);
             }}
           />

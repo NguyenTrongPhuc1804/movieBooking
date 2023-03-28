@@ -3,7 +3,7 @@ import axios from "axios";
 import { Await } from "react-router-dom";
 import requestMovie from "../../services/servicesReques";
 import repuestMovie from "../../services/servicesReques";
-import { ACCESS_TOKEN, DOMAIN } from "../../util/setting/config";
+import { ACCESS_TOKEN, DOMAIN, groupId } from "../../util/setting/config";
 import { openCustomNotificationWithIcon } from "../../util/setting/nontification";
 import { displayLoading, hiddenLoading } from "./LoadingSlice";
 
@@ -62,6 +62,17 @@ export const ManagementFilmSlice = createSlice({
     });
     //Edit upload film
     builder.addCase(editUploadFilm.fulfilled, (state, action) => {
+      if (action.payload.response.status) {
+        openCustomNotificationWithIcon(
+          "error",
+          "Sửa phim thất bại",
+          "Vui lòng sửa với quyền quản trị",
+          "topRight"
+        );
+      }
+    });
+    //Delete Film
+    builder.addCase(deleteFilm.fulfilled, (state, action) => {
       console.log(action);
     });
   },
@@ -69,12 +80,26 @@ export const ManagementFilmSlice = createSlice({
 
 // getListFilm
 
-export const getListFilm = createAsyncThunk("film/getListFilm", async () => {
-  const { data } = await requestMovie.get(
-    "QuanLyPhim/LayDanhSachPhim?maNhom=GP00"
-  );
-  return data;
-});
+export const getListFilm = createAsyncThunk(
+  "film/getListFilm",
+  async (tenPhim = "") => {
+    try {
+      if (tenPhim !== "") {
+        const { data } = await requestMovie.get(
+          `QuanLyPhim/LayDanhSachPhim?maNhom=${groupId}&tenPhim=${tenPhim}`
+        );
+        return data;
+      } else {
+        const { data } = await requestMovie.get(
+          `QuanLyPhim/LayDanhSachPhim?maNhom=${groupId}`
+        );
+        return data;
+      }
+    } catch (err) {
+      console.log("err", err);
+    }
+  }
+);
 // add Film with img
 export const uploadFilm = createAsyncThunk(
   "film/uploadFilm",
@@ -92,12 +117,14 @@ export const uploadFilm = createAsyncThunk(
         "",
         "topRight"
       );
+      dispatch(getListFilm());
       dispatch(hiddenLoading());
+
       return data;
     } catch (err) {
       dispatch(hiddenLoading());
       openCustomNotificationWithIcon(
-        "success",
+        "error",
         "Thêm phim thất bại",
         "",
         "topRight"
@@ -139,12 +166,49 @@ export const editUploadFilm = createAsyncThunk(
         formData
       );
       // console.log(data);
-
+      openCustomNotificationWithIcon(
+        "success",
+        "Edit phim thành công",
+        "",
+        "topRight"
+      );
+      dispatch(getListFilm());
       dispatch(hiddenLoading());
       return data;
     } catch (err) {
       dispatch(hiddenLoading());
 
+      console.log("err", err);
+      return err;
+    }
+  }
+);
+//Delete film fromm edit page
+export const deleteFilm = createAsyncThunk(
+  "film/deleteFilm",
+  async (maPhim, { dispatch }) => {
+    dispatch(displayLoading());
+    try {
+      const { data } = await requestMovie.delete(
+        `QuanLyPhim/XoaPhim?MaPhim=${maPhim}`
+      );
+      openCustomNotificationWithIcon(
+        "success",
+        "Xóa phim thành công",
+        "",
+        "topRight"
+      );
+      dispatch(getListFilm());
+      dispatch(hiddenLoading());
+      return data;
+    } catch (err) {
+      dispatch(hiddenLoading());
+      openCustomNotificationWithIcon(
+        "error",
+        "Xóa phim thất bại",
+        "Vui lòng xóa với quyền quản trị",
+        "topRight"
+      );
       console.log("err", err);
       return err;
     }

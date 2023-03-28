@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import { AlignLeftOutlined } from "@ant-design/icons";
+import cinema from "../../asset/LogoCinema/cinema.png";
+
 function AdminTemplate() {
   const [dropDown, setDropDown] = useState({
     navFilm: 0,
@@ -41,16 +43,16 @@ function AdminTemplate() {
                     ></path>
                   </svg> */}
                 </button>
-                <a href="https://flowbite.com" className="flex ml-2 md:mr-24">
-                  <img
-                    src="https://flowbite.com/docs/images/logo.svg"
-                    className="h-8 mr-3"
+                <div className="flex w-[100px] ml-2 md:mr-24">
+                  {/* <img
+                    src={cinema}
+                    className="h-8 w-full mr-3"
                     alt="FlowBite Logo"
-                  />
-                  <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">
-                    Flowbite
+                  /> */}
+                  <span className="self-center text-[#B73E3E] text-xl font-semibold sm:text-2xl whitespace-nowrap ">
+                    CINEPLEXX
                   </span>
-                </a>
+                </div>
               </div>
               <div className="flex items-center">
                 <div className="flex items-center ml-3">
@@ -220,7 +222,7 @@ function AdminTemplate() {
                   <li>
                     <NavLink to="film">
                       <a className="flex items-center w-full p-2 text-base font-normal text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
-                        Phim
+                        Danh sách phim
                       </a>
                     </NavLink>
                   </li>
@@ -285,7 +287,7 @@ function AdminTemplate() {
                   <li>
                     <NavLink to="film">
                       <a className="flex items-center w-full p-2 text-base font-normal text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
-                        Phim
+                        Danh sách phim
                       </a>
                     </NavLink>
                   </li>
@@ -305,7 +307,7 @@ function AdminTemplate() {
           </div>
         </aside>
         <div className="p-0 sm:p-4 sm:ml-64">
-          <div className="p-0 sm:p-4 border-2   mt-14">
+          <div className="p-4 border-2   mt-14">
             <Outlet />
           </div>
         </div>

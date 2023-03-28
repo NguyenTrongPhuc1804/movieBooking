@@ -9,6 +9,7 @@ import {
   Navigate,
   redirect,
   Router,
+  useNavigate,
 } from "react-router-dom";
 import HomeTemplate from "./templates/HomeTemplate/HomeTemplate";
 import Home from "./pages/Home/Home";
@@ -26,6 +27,7 @@ import AdminTemplate from "./templates/AdminTemplate/AdminTemplate";
 import Film from "./pages/Film/Film";
 import AddNew from "./pages/Film/AddNew/AddNew";
 import EditFilm from "./pages/Film/EditFilm/EditFilm";
+import ShowTime from "./pages/Film/ShowTime/ShowTime";
 export const history = createBrowserHistory();
 const CheckoutTemplateLazy = lazy(() =>
   import("./templates/CheckoutTemplate/CheckoutTemplate")
@@ -53,6 +55,7 @@ function App() {
             <Route path="film" element={<Film />}></Route>
             <Route path="film/add-new" element={<AddNew />} />
             <Route path="film/edit/:id" element={<EditFilm />} />
+            <Route path="film/show-time/:id/:tenPhim" element={<ShowTime />} />
           </Route>
         </Routes>
       </BrowserRouter>

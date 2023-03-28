@@ -27,16 +27,16 @@ import {
   uploadFilm,
 } from "../../../redux/reducer/ManagementFilmSlice";
 import { groupId } from "../../../util/setting/config";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import dayjs, { Dayjs } from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
 dayjs.extend(customParseFormat);
 function EditFilm() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { filmEdit } = useSelector((state) => state.ManagementFilmSlice);
-  console.log(filmEdit);
   let { id } = useParams();
   const [componentDisabled, setComponentDisabled] = useState(false);
   const [imgSrc, setImgSrc] = useState("");
@@ -55,7 +55,7 @@ function EditFilm() {
       hinhAnh: null,
       maNhom: filmEdit.maNhom,
     },
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       let formData = new FormData();
       for (let key in values) {
         if (key !== "hinhAnh") {
@@ -66,10 +66,15 @@ function EditFilm() {
           }
         }
       }
+      for (const value of formData.values()) {
+        console.log(value);
+      }
       dispatch(editUploadFilm(formData));
+      navigate("/admin/film");
     },
   });
 
+  // console.log("value", formik.values);
   const handleChangeSwitch = (name) => {
     return (value) => {
       formik.setFieldValue(name, value);
@@ -80,13 +85,12 @@ function EditFilm() {
       formik.setFieldValue(name, value);
     };
   };
-  const handleChangeUpload = (e) => {
+  const handleChangeUpload = async (e) => {
     let file = e.target.files[0];
-    formik.setFieldValue("hinhAnh", file);
+    await formik.setFieldValue("hinhAnh", file);
     let reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = (e) => {
-      console.log("asd", e.target.result);
       setImgSrc(e.target.result);
     };
   };
@@ -95,8 +99,9 @@ function EditFilm() {
   }, []);
   return (
     <>
-      <h1 className="text-2xl text-center font-bold my-4">Edit Phim</h1>
+      <h1 className="text-4xl text-center font-bold my-4">Edit Phim</h1>
       <Form
+        size="large"
         className="w-full mx-auto"
         onSubmitCapture={formik.handleSubmit}
         labelCol={{
@@ -134,7 +139,7 @@ function EditFilm() {
         </Form.Item>
         <Form.Item label="Ngày chiếu">
           <DatePicker
-            format={"DD-MM-YYYY"}
+            format={"DD/MM/YYYY"}
             name="ngayKhoiChieu"
             id="ngayKhoiChieu"
             onChange={(e) => {
@@ -194,7 +199,7 @@ function EditFilm() {
             type="submit"
             className="bg-blue-500  text-white py-2 px-4 mt-8 hover:scale-110 transition-all rounded-md"
           >
-            Lưu
+            Cập nhật
           </button>
         </div>
       </Form>

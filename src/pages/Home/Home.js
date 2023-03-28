@@ -31,7 +31,7 @@ function Home() {
   );
   console.log(listFilm);
   useEffect(() => {
-    dispatch(getListFilm("asd"));
+    dispatch(getListFilm());
     dispatch(getListInfoCinema());
   }, []);
 
@@ -128,7 +128,7 @@ function Home() {
         {renderFilm()}
       </Swiper>
       <div className="">
-        <h1 className="text-2xl text-center text-white">Phim hot</h1>
+        <h1 className="text-4xl font-bold text-center text-white">Phim hot</h1>
         <Swiper
           style={{
             width: "80%",
