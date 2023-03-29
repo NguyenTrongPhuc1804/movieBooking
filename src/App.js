@@ -28,6 +28,9 @@ import Film from "./pages/Film/Film";
 import AddNew from "./pages/Film/AddNew/AddNew";
 import EditFilm from "./pages/Film/EditFilm/EditFilm";
 import ShowTime from "./pages/Film/ShowTime/ShowTime";
+import Profile from "./pages/Profile/Profile";
+import ProfileForm from "./components/ProfileForm/ProfileForm";
+import User from "./pages/User/User";
 export const history = createBrowserHistory();
 const CheckoutTemplateLazy = lazy(() =>
   import("./templates/CheckoutTemplate/CheckoutTemplate")
@@ -44,6 +47,7 @@ function App() {
             <Route path="/checkout/:id" element={<CheckoutTemplate />}>
               <Route path="" element={<Checkout />}></Route>
             </Route>
+            <Route path="profile" element={<Profile />} />
           </Route>
           <Route path="/login" element={<UserTemplate />}>
             <Route path="sign-in" element={<Login />}></Route>
@@ -51,7 +55,7 @@ function App() {
           </Route>
 
           <Route path="/admin" element={<AdminTemplate />}>
-            <Route path="" element={<Film />}></Route>
+            <Route path="" element={<User />}></Route>
             <Route path="film" element={<Film />}></Route>
             <Route path="film/add-new" element={<AddNew />} />
             <Route path="film/edit/:id" element={<EditFilm />} />

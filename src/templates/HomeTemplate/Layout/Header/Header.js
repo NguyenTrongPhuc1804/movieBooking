@@ -83,7 +83,12 @@ function Header() {
               </NavLink>
               {localStorage.getItem(USER_INFO) ? (
                 <div className="flex items-center justify-between">
-                  <p className="p-2">
+                  <p
+                    onClick={() => {
+                      navigate("profile");
+                    }}
+                    className="p-2 cursor-pointer hover:text-blue-400"
+                  >
                     {t("Hello")} {infoUser.hoTen}!!
                   </p>
                   <button
@@ -106,7 +111,7 @@ function Header() {
                     {t("Login")}
                   </NavLink>
                   <NavLink
-                    to="login/signUp"
+                    to="login/sign-up"
                     className="p-2 lg:px-4 md:mx-2  text-center border border-solid border-[#ff7f50] rounded hover:bg-[#ff7f50] hover:text-white transition-colors duration-300 mt-1 md:mt-0 md:ml-1"
                   >
                     {t("Sign up")}

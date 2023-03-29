@@ -14,6 +14,7 @@ const initialState = {
   userInfo: infoUser,
   login: false,
   historyUserBookTicket: {},
+  infoUserUpdate: {},
 };
 
 export const ManagementUserSlice = createSlice({
@@ -52,6 +53,18 @@ export const ManagementUserSlice = createSlice({
       const { content, statusCode } = action.payload;
       state.historyUserBookTicket = content;
     });
+    // register user
+    builder.addCase(registerUser.fulfilled, (state, action) => {
+      console.log(action);
+    });
+    // update user
+    builder.addCase(updateUser.fulfilled, (state, action) => {
+      console.log(action);
+    });
+    // get info user to update user page
+    builder.addCase(getInfoUserUpdate.fulfilled, (state, action) => {
+      state.infoUserUpdate = action.payload.content;
+    });
   },
 });
 
@@ -87,6 +100,61 @@ export const loginUser = createAsyncThunk(
     }
   }
 );
+//register user
+export const registerUser = createAsyncThunk(
+  "user/registerUser",
+  async (user, { dispatch }) => {
+    dispatch(displayLoading());
+    try {
+      const { data } = await requestMovie.post("QuanLyNguoiDung/DangKy", user);
+      openCustomNotificationWithIcon(
+        "success",
+        "Đăng ký thành công",
+        "",
+        "topRight"
+      );
+      dispatch(hiddenLoading());
+      return data;
+    } catch (err) {
+      console.log(err);
+      openCustomNotificationWithIcon("error", "Đăng ký thất bại", "topRight");
+      dispatch(hiddenLoading());
+
+      return err;
+    }
+  }
+);
+//update user
+export const updateUser = createAsyncThunk(
+  "user/updateUser",
+  async (user, { dispatch }) => {
+    dispatch(displayLoading());
+    try {
+      const { data } = await requestMovie.put(
+        "QuanLyNguoiDung/CapNhatThongTinNguoiDung",
+        user
+      );
+      openCustomNotificationWithIcon(
+        "success",
+        "Cập nhật thông tin thành công",
+        "",
+        "topRight"
+      );
+      dispatch(hiddenLoading());
+      return data;
+    } catch (err) {
+      console.log(err);
+      openCustomNotificationWithIcon(
+        "error",
+        "Cập nhật thông tin thất bại",
+        "topRight"
+      );
+      dispatch(hiddenLoading());
+
+      return err;
+    }
+  }
+);
 //get history user booking ticket
 export const getHistoryUserBookTicket = createAsyncThunk(
   "user/getHistoryBookTicket",
@@ -97,7 +165,16 @@ export const getHistoryUserBookTicket = createAsyncThunk(
     return data;
   }
 );
-
+// get info user to update user page
+export const getInfoUserUpdate = createAsyncThunk(
+  "user/getInfoUserUpdate",
+  async () => {
+    const { data } = await requestMovie.post(
+      "QuanLyNguoiDung/ThongTinTaiKhoan"
+    );
+    return data;
+  }
+);
 export const { logOut } = ManagementUserSlice.actions;
 
 export default ManagementUserSlice.reducer;

@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 export default function CardFilmV2(props) {
   const navigate = useNavigate();
   const { film } = props;
-  console.log(film);
   return (
     <div
       style={{ cursor: "pointer" }}

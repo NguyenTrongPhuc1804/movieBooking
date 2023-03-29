@@ -1,15 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, Outlet } from "react-router-dom";
-import { AlignLeftOutlined } from "@ant-design/icons";
+import { Navigate, NavLink, Outlet, useNavigate } from "react-router-dom";
+import {
+  AlignLeftOutlined,
+  UserOutlined,
+  PieChartOutlined,
+} from "@ant-design/icons";
 import cinema from "../../asset/LogoCinema/cinema.png";
+import { USER_INFO } from "../../util/setting/config";
+import { useDispatch } from "react-redux";
+import { logOut } from "../../redux/reducer/ManagementUserSlice";
 
 function AdminTemplate() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [dropDown, setDropDown] = useState({
     navFilm: 0,
     infoUser: false,
   });
-
-  console.log(dropDown.infoUser);
+  const userInfo = JSON.parse(localStorage.getItem(USER_INFO));
+  console.log(userInfo);
   return (
     <>
       <div>
@@ -43,7 +52,12 @@ function AdminTemplate() {
                     ></path>
                   </svg> */}
                 </button>
-                <div className="flex w-[100px] ml-2 md:mr-24">
+                <div
+                  onClick={() => {
+                    navigate("/");
+                  }}
+                  className="flex w-[100px] ml-2 md:mr-24 cursor-pointer"
+                >
                   {/* <img
                     src={cinema}
                     className="h-8 w-full mr-3"
@@ -93,50 +107,38 @@ function AdminTemplate() {
                         className="text-sm text-gray-900 dark:text-white"
                         role="none"
                       >
-                        Neil Sims
+                        {userInfo.hoTen}
                       </p>
                       <p
                         className="text-sm font-medium text-gray-900 truncate dark:text-gray-300"
                         role="none"
                       >
-                        neil.sims@flowbite.com
+                        {userInfo.email}
                       </p>
                     </div>
                     <ul className="py-1" role="none">
-                      <li>
+                      <li
+                        onClick={() => {
+                          navigate("/profile");
+                        }}
+                      >
                         <a
-                          href="#"
                           className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                           role="menuitem"
                         >
-                          Dashboard
+                          Cập nhật thông tin tài khoản
                         </a>
                       </li>
                       <li>
                         <a
-                          href="#"
+                          onClick={() => {
+                            dispatch(logOut());
+                            navigate("/");
+                          }}
                           className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                           role="menuitem"
                         >
-                          Settings
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="#"
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                          role="menuitem"
-                        >
-                          Earnings
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="#"
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                          role="menuitem"
-                        >
-                          Sign out
+                          Đăng xuất
                         </a>
                       </li>
                     </ul>
@@ -170,6 +172,7 @@ function AdminTemplate() {
                     <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
                     <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
                   </svg> */}
+                  <UserOutlined />
                   <span className="ml-3">User</span>
                 </a>
               </li>
@@ -196,6 +199,8 @@ function AdminTemplate() {
                       clip-rule="evenodd"
                     ></path>
                   </svg> */}
+                  <PieChartOutlined />
+
                   <span className="flex-1 ml-3 text-left whitespace-nowrap">
                     Film
                   </span>
@@ -217,71 +222,6 @@ function AdminTemplate() {
                   id="dropdown-example"
                   className={` ${
                     dropDown.navFilm === 1 ? "" : "hidden"
-                  }  space-y-2`}
-                >
-                  <li>
-                    <NavLink to="film">
-                      <a className="flex items-center w-full p-2 text-base font-normal text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
-                        Danh sách phim
-                      </a>
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="film/add-new">
-                      <a
-                        href="#"
-                        className="flex items-center w-full p-2 text-base font-normal text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                      >
-                        Thêm Phim
-                      </a>
-                    </NavLink>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <button
-                  onClick={() => {
-                    setDropDown({ ...dropDown, navFilm: 2 });
-                  }}
-                  type="button"
-                  className="flex items-center w-full p-2 text-base font-normal text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                  aria-controls="dropdown-example"
-                  data-collapse-toggle="dropdown-example"
-                >
-                  {/* <svg
-                    aria-hidden="true"
-                    className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z"
-                      clip-rule="evenodd"
-                    ></path>
-                  </svg> */}
-                  <span className="flex-1 ml-3 text-left whitespace-nowrap">
-                    Film
-                  </span>
-
-                  {/* <svg
-                    className="w-6 h-6"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                      clip-rule="evenodd"
-                    ></path>
-                  </svg> */}
-                </button>
-                <ul
-                  id="dropdown-example"
-                  className={` ${
-                    dropDown.navFilm === 2 ? "" : "hidden"
                   }  space-y-2`}
                 >
                   <li>

@@ -58,7 +58,7 @@ function ShowTime() {
       } catch (error) {
         console.log("err", error);
         openCustomNotificationWithIcon(
-          "success",
+          "error",
           "Tạo lịch chiếu phim thất bại",
           "",
           "topRight"
@@ -114,12 +114,12 @@ function ShowTime() {
   return (
     <div>
       <h1 className="text-center text-4xl font-bold mb-6">Tạo Lịch Chiếu</h1>
-      <div className="flex justify-between items-center">
-        <div className="card-film w-[20%] mx-auto">
+      <div className="flex-wrap sm:flex justify-between items-center">
+        <div className="card-film w-[70%] sm:w-[20%] mx-auto">
           <CardFilm film={film}></CardFilm>
         </div>
-        <div className="form w-[50%]">
-          <p className="text-3xl text-center mb-4">{tenPhim}</p>
+        <div className="form w-full sm:w-[50%]">
+          <p className="text-3xl text-center mb-4 mt-4">{tenPhim}</p>
 
           <Form
             onSubmitCapture={formik.handleSubmit}
