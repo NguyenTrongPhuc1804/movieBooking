@@ -1,9 +1,11 @@
 import React, { useEffect } from "react";
-import { Button, Checkbox, Form, Input, InputNumber } from "antd";
+import { Button, Checkbox, Form, Input, InputNumber, Select } from "antd";
 import { groupId, USER_INFO } from "../../util/setting/config";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  addUser,
   getInfoUserUpdate,
+  getTypeUser,
   updateUser,
 } from "../../redux/reducer/ManagementUserSlice";
 import { ErrorMessage, useFormik } from "formik";
@@ -12,16 +14,20 @@ function ProfileForm(props) {
   const dispatch = useDispatch();
   let { infoUserUpdate } = props;
   const { maLoaiNguoiDung } = JSON.parse(localStorage.getItem(USER_INFO));
+  const userUpdateAdmin = JSON.parse(localStorage.getItem("USER_UPDATE"));
+  const { typeUser } = useSelector((state) => state.ManagementUserSlice);
   const formik = useFormik({
     enableReinitialize: true,
 
     initialValues: {
       email: infoUserUpdate.email,
       hoTen: infoUserUpdate.hoTen,
-      maLoaiNguoiDung: maLoaiNguoiDung,
-      maNhom: infoUserUpdate.maNhom,
+      maLoaiNguoiDung: userUpdateAdmin
+        ? userUpdateAdmin.maLoaiNguoiDung
+        : maLoaiNguoiDung,
+      maNhom: groupId,
       matKhau: infoUserUpdate.matKhau,
-      soDt: infoUserUpdate.soDT,
+      soDt: userUpdateAdmin ? userUpdateAdmin.soDt : infoUserUpdate.soDT,
       taiKhoan: infoUserUpdate.taiKhoan,
     },
     validationSchema: Yup.object({
@@ -34,18 +40,38 @@ function ProfileForm(props) {
       matKhau: Yup.string().required("Mật khẩu là bắt buộc"),
     }),
     onSubmit: (values) => {
+      {
+        userUpdateAdmin !== "addNew"
+          ? dispatch(updateUser(values))
+          : dispatch(addUser(values));
+      }
       console.log(values);
-      dispatch(updateUser(values));
     },
   });
+  const handleChange = (value) => {
+    console.log(`selected ${value}`);
+    formik.setFieldValue("maLoaiNguoiDung", value);
+  };
+  const options = typeUser.map((item, idx) => ({
+    label: item.tenLoai,
+    value: item.maLoaiNguoiDung,
+  }));
   useEffect(() => {
     dispatch(getInfoUserUpdate());
+    dispatch(getTypeUser());
   }, []);
   return (
     <>
-      <p className="text-4xl font-bold text-center mb-6 text-black">
-        Chỉnh sửa thông tin tài khoản
-      </p>
+      {" "}
+      {userUpdateAdmin === "addNew" ? (
+        <p className="text-3xl font-bold text-center mb-6 text-black">
+          Thêm mới người dùng
+        </p>
+      ) : (
+        <p className="text-3xl font-bold text-center mb-6 text-black">
+          Chỉnh sửa thông tin tài khoản
+        </p>
+      )}
       <Form
         size="large"
         className="mx-auto"
@@ -97,6 +123,7 @@ function ProfileForm(props) {
           <div className="">
             <Form.Item label="Tài khoản ">
               <Input
+                disabled={userUpdateAdmin === "addNew" ? false : true}
                 value={formik.values.taiKhoan}
                 onChange={formik.handleChange}
                 name="taiKhoan"
@@ -117,11 +144,35 @@ function ProfileForm(props) {
               )}
             </Form.Item>
           </div>
+          {userUpdateAdmin ? (
+            <div className="flex w-full justify-center items-center mb-6">
+              <p className="mr-4">Loại tài khoản:</p>
+              <Select
+                className=""
+                // defaultValue="lucy"
+                // labelInValue={userUpdateAdmin.maLoaiNguoiDung}
+                defaultValue={userUpdateAdmin.maLoaiNguoiDung}
+                style={{
+                  width: 150,
+                }}
+                onChange={handleChange}
+                options={options}
+              />
+            </div>
+          ) : (
+            ""
+          )}
         </div>
         <Form.Item className="mx-auto w-full flex justify-center">
-          <Button type="primary" className="bg-blue-500 " htmlType="submit">
-            Cập nhật
-          </Button>
+          {userUpdateAdmin === "addNew" ? (
+            <Button type="primary" className="bg-blue-500 " htmlType="submit">
+              Thêm mới
+            </Button>
+          ) : (
+            <Button type="primary" className="bg-blue-500 " htmlType="submit">
+              Cập nhật
+            </Button>
+          )}
         </Form.Item>
       </Form>
     </>

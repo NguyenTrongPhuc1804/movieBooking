@@ -15,8 +15,10 @@ function Profile() {
       key: "1",
       label: <p className="text-2xl">Thông tin cá nhân</p>,
       children: (
-        <div className=" bg-[#ECF2FF] w-full mx-auto rounded-lg p-5">
-          <ProfileForm infoUserUpdate={infoUserUpdate} />
+        <div className="w-full">
+          <div className=" bg-[#ECF2FF] w-[70%] mx-auto rounded-lg py-5  ">
+            <ProfileForm infoUserUpdate={infoUserUpdate} />
+          </div>
         </div>
       ),
     },
@@ -33,9 +35,9 @@ function Profile() {
     },
   ];
   return (
-    <div className=" mt-[6rem]  mb-4">
+    <div className=" mt-[6rem]  mb-4 ">
       <Tabs
-        className="text-white  p-4"
+        className="text-white  p-10"
         defaultActiveKey="1"
         items={items}
         onChange={onChange}

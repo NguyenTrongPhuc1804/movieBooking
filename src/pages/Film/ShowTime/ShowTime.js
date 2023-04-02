@@ -171,6 +171,7 @@ function ShowTime() {
             </Form.Item>
             <Form.Item label="Giá vé">
               <InputNumber
+                defaultValue={75000}
                 name="giaVe"
                 id="giaVe"
                 min={75000}
