@@ -32,6 +32,7 @@ import Profile from "./pages/Profile/Profile";
 import ProfileForm from "./components/ProfileForm/ProfileForm";
 import User from "./pages/User/ManagementUser";
 import ManagementUser from "./pages/User/ManagementUser";
+import NotFound from "./pages/404NotFound/NotFound";
 export const history = createBrowserHistory();
 const CheckoutTemplateLazy = lazy(() =>
   import("./templates/CheckoutTemplate/CheckoutTemplate")
@@ -62,6 +63,7 @@ function App() {
             <Route path="film/edit/:id" element={<EditFilm />} />
             <Route path="film/show-time/:id/:tenPhim" element={<ShowTime />} />
           </Route>
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </div>

@@ -12,7 +12,7 @@ import { ErrorMessage, useFormik } from "formik";
 import * as Yup from "yup";
 function ProfileForm(props) {
   const dispatch = useDispatch();
-  let { infoUserUpdate } = props;
+  let { infoUserUpdate, onClose } = props;
   const { maLoaiNguoiDung } = JSON.parse(localStorage.getItem(USER_INFO));
   const userUpdateAdmin = JSON.parse(localStorage.getItem("USER_UPDATE"));
   const { typeUser } = useSelector((state) => state.ManagementUserSlice);
@@ -165,11 +165,25 @@ function ProfileForm(props) {
         </div>
         <Form.Item className="mx-auto w-full flex justify-center">
           {userUpdateAdmin === "addNew" ? (
-            <Button type="primary" className="bg-blue-500 " htmlType="submit">
+            <Button
+              onClick={() => {
+                onClose();
+              }}
+              type="primary"
+              className="bg-blue-500 "
+              htmlType="submit"
+            >
               Thêm mới
             </Button>
           ) : (
-            <Button type="primary" className="bg-blue-500 " htmlType="submit">
+            <Button
+              onClick={() => {
+                onClose();
+              }}
+              type="primary"
+              className="bg-blue-500 "
+              htmlType="submit"
+            >
               Cập nhật
             </Button>
           )}

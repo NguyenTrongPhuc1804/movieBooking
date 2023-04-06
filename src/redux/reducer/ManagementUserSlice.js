@@ -162,13 +162,23 @@ export const updateUser = createAsyncThunk(
       dispatch(hiddenLoading());
       return data;
     } catch (err) {
-      console.log(err);
-      openCustomNotificationWithIcon(
-        "error",
-        "Cập nhật thông tin thất bại",
-        "topRight"
-      );
+      console.log(err.response.status);
       dispatch(hiddenLoading());
+      if (err.response.status === 403) {
+        openCustomNotificationWithIcon(
+          "error",
+          "Cập nhật thông tin thất bại",
+          `Tài khoản của bạn không có quyền sửa người dùng`,
+          "topRight"
+        );
+      } else {
+        openCustomNotificationWithIcon(
+          "error",
+          "Cập nhật thông tin thất bại",
+          "",
+          "topRight"
+        );
+      }
 
       return err;
     }
@@ -262,6 +272,7 @@ export const addUser = createAsyncThunk(
     }
   }
 );
+//delete user
 export const deleteUser = createAsyncThunk(
   "user/deleteUser",
   async (name, { dispatch }) => {
@@ -273,7 +284,7 @@ export const deleteUser = createAsyncThunk(
       );
       openCustomNotificationWithIcon(
         "success",
-        "Xóa người dùng dùng thành công",
+        "Xóa người dùng thành công",
         "",
         "topRight"
       );
@@ -283,12 +294,22 @@ export const deleteUser = createAsyncThunk(
       return data;
     } catch (err) {
       dispatch(hiddenLoading());
-      openCustomNotificationWithIcon(
-        "error",
-        "Xóa người dùng dùng thất bại",
-        `${err.response.data.content}`,
-        "topRight"
-      );
+      if (err.response.status === 403) {
+        openCustomNotificationWithIcon(
+          "error",
+          "Xóa người dùng dùng thất bại",
+          `Tài khoản của bạn không có quyền xóa người dùng`,
+          "topRight"
+        );
+      } else {
+        openCustomNotificationWithIcon(
+          "error",
+          "Xóa người dùng dùng thất bại",
+          `${err.response.data.content}`,
+          "topRight"
+        );
+      }
+
       console.log("err", err.response.data.content);
       return err;
     }

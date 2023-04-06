@@ -40,7 +40,7 @@ export default function CardFilmV2(props) {
           )}
         </p> */}
         <button className="bg-orange-400 py-2 px-4 rounded-lg text-white hover:scale-110 transition-all">
-          <i class="fas fa-thumbs-up"></i> {film.danhGia * 10}%
+          <i className="fas fa-thumbs-up"></i> {film.danhGia * 10}%
         </button>
         <button className="hover:bg-orange-400 border-orange-500 border py-2 mt-2 px-4 rounded-lg text-white hover:scale-110 transition-all">
           Đặt vé

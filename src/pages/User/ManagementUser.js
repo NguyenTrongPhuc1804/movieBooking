@@ -30,7 +30,7 @@ function ManagementUser() {
     {
       title: "Tài khoản",
       dataIndex: "taiKhoan",
-      render: (text) => <p>{text}</p>,
+      render: (text) => <p className="w-[100px] truncate ...">{text}</p>,
     },
     {
       title: "Mật khẩu",
@@ -59,7 +59,7 @@ function ManagementUser() {
     {
       title: "Loại người dùng",
       dataIndex: "maLoaiNguoiDung",
-      responsive: ["sm"],
+      // responsive: ["sm"],
 
       render: (text, record) => {
         let colors = "";
@@ -156,7 +156,7 @@ function ManagementUser() {
         onClose={onClose}
         open={open}
       >
-        <ProfileForm infoUserUpdate={user} />
+        <ProfileForm onClose={onClose} infoUserUpdate={user} />
       </Drawer>
       <div className="w-full">
         <Table
