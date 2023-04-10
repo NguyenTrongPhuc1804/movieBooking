@@ -71,16 +71,7 @@ function Header() {
               >
                 {t("About")}
               </NavLink>
-              <NavLink
-                to="/2"
-                className={({ isActive }) =>
-                  isActive
-                    ? "p-2 lg:px-4 md:mx-2 text-white rounded bg-[#ff7f50]"
-                    : "p-2 lg:px-4 md:mx-2  rounded hover:bg-[#ff7f50] hover:text-white transition-colors duration-300"
-                }
-              >
-                Features
-              </NavLink>
+
               {localStorage.getItem(USER_INFO) ? (
                 <div className="flex items-center justify-between">
                   <p
