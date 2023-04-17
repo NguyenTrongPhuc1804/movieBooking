@@ -62,14 +62,24 @@ function Header() {
                 {t("Home")}
               </NavLink>
               <NavLink
-                to="/2"
+                to="/booking-ticket"
                 className={({ isActive }) =>
                   isActive
                     ? "p-2 lg:px-4 md:mx-2 text-white rounded bg-[#ff7f50]"
                     : "p-2 lg:px-4 md:mx-2  rounded hover:bg-[#ff7f50] hover:text-white transition-colors duration-300"
                 }
               >
-                {t("About")}
+                {t("Booking ticket")}
+              </NavLink>
+              <NavLink
+                to="/admin"
+                className={({ isActive }) =>
+                  isActive
+                    ? "p-2 lg:px-4 md:mx-2 text-white rounded bg-[#ff7f50]"
+                    : "p-2 lg:px-4 md:mx-2  rounded hover:bg-[#ff7f50] hover:text-white transition-colors duration-300"
+                }
+              >
+                {t("Admin")}
               </NavLink>
 
               {localStorage.getItem(USER_INFO) ? (

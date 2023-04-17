@@ -1,7 +1,8 @@
 {
-  "About": "About",
+  "Admin": "Admin",
   "Home": "Home",
   "Login": "Login",
   "Sign up": "Sign up",
-  "Hello": "Hello"
+  "Hello": "Hello",
+  "Booking ticket": "Booking ticket"
 }

@@ -9,6 +9,7 @@ import cinema from "../../asset/LogoCinema/cinema.png";
 import { USER_INFO } from "../../util/setting/config";
 import { useDispatch } from "react-redux";
 import { logOut } from "../../redux/reducer/ManagementUserSlice";
+import { openCustomNotificationWithIcon } from "../../util/setting/nontification";
 
 function AdminTemplate() {
   const dispatch = useDispatch();
@@ -18,7 +19,10 @@ function AdminTemplate() {
     infoUser: false,
   });
   const userInfo = JSON.parse(localStorage.getItem(USER_INFO));
-  if (localStorage.getItem(USER_INFO)) {
+  if (
+    localStorage.getItem(USER_INFO) &&
+    userInfo.maLoaiNguoiDung === "QuanTri"
+  ) {
     return (
       <>
         <div>
@@ -304,6 +308,12 @@ function AdminTemplate() {
       </>
     );
   } else {
+    openCustomNotificationWithIcon(
+      "error",
+      "Không thể truy cập trang quản trị",
+      `Tài khoản của bạn không có quyền truy cập`,
+      "topRight"
+    );
     return <Navigate to="/login/sign-in" />;
   }
 }

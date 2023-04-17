@@ -33,6 +33,7 @@ import ProfileForm from "./components/ProfileForm/ProfileForm";
 import User from "./pages/User/ManagementUser";
 import ManagementUser from "./pages/User/ManagementUser";
 import NotFound from "./pages/404NotFound/NotFound";
+import BookingTicket from "./pages/BookingTicket/BookingTicket";
 export const history = createBrowserHistory();
 const CheckoutTemplateLazy = lazy(() =>
   import("./templates/CheckoutTemplate/CheckoutTemplate")
@@ -45,6 +46,8 @@ function App() {
         <Routes>
           <Route path="/" element={<HomeTemplate />}>
             <Route path="" element={<Home />} />
+            <Route path="booking-ticket" element={<BookingTicket />} />
+
             <Route path="detail/:id" element={<Detail />} />
             <Route path="/checkout/:id" element={<CheckoutTemplate />}>
               <Route path="" element={<Checkout />}></Route>
