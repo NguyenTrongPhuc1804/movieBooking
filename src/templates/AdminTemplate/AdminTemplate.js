@@ -312,6 +312,7 @@ function AdminTemplate() {
       "error",
       "Không thể truy cập trang quản trị",
       `Tài khoản của bạn không có quyền truy cập`,
+      
       "topRight"
     );
     return <Navigate to="/login/sign-in" />;

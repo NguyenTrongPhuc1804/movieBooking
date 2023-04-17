@@ -27,6 +27,7 @@ export const ManagementUserSlice = createSlice({
       state.login = false;
       localStorage.removeItem(ACCESS_TOKEN);
       localStorage.removeItem(USER_INFO);
+      localStorage.removeItem("USER_UPDATE");
       if (!localStorage.getItem(ACCESS_TOKEN)) {
         openCustomNotificationWithIcon(
           "success",
@@ -61,6 +62,10 @@ export const ManagementUserSlice = createSlice({
     });
     // update user
     builder.addCase(updateUser.fulfilled, (state, action) => {
+      console.log(action);
+    });
+    //update user admin
+    builder.addCase(updateUserAdmin.fulfilled, (state, action) => {
       console.log(action);
     });
     // get info user to update user page
@@ -142,13 +147,54 @@ export const registerUser = createAsyncThunk(
     }
   }
 );
-//update user
+//update user admin
+export const updateUserAdmin = createAsyncThunk(
+  "user/updateUserAdmin",
+  async (user, { dispatch }) => {
+    dispatch(displayLoading());
+    try {
+      const { data } = await requestMovie.post(
+        "QuanLyNguoiDung/CapNhatThongTinNguoiDung",
+        user
+      );
+      openCustomNotificationWithIcon(
+        "success",
+        "Cập nhật thông tin thành công",
+        "",
+        "topRight"
+      );
+      dispatch(getListUser());
+      dispatch(hiddenLoading());
+      return data;
+    } catch (err) {
+      console.log(err.response.status);
+      dispatch(hiddenLoading());
+      if (err.response.status === 403) {
+        openCustomNotificationWithIcon(
+          "error",
+          "Cập nhật thông tin thất bại",
+          `Tài khoản của bạn không có quyền sửa người dùng`,
+          "topRight"
+        );
+      } else {
+        openCustomNotificationWithIcon(
+          "error",
+          "Cập nhật thông tin thất bại",
+          "",
+          "topRight"
+        );
+      }
+
+      return err;
+    }
+  }
+);
 export const updateUser = createAsyncThunk(
   "user/updateUser",
   async (user, { dispatch }) => {
     dispatch(displayLoading());
     try {
-      const { data } = await requestMovie.post(
+      const { data } = await requestMovie.put(
         "QuanLyNguoiDung/CapNhatThongTinNguoiDung",
         user
       );

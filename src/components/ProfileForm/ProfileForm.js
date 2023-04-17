@@ -7,6 +7,7 @@ import {
   getInfoUserUpdate,
   getTypeUser,
   updateUser,
+  updateUserAdmin,
 } from "../../redux/reducer/ManagementUserSlice";
 import { ErrorMessage, useFormik } from "formik";
 import * as Yup from "yup";
@@ -42,7 +43,9 @@ function ProfileForm(props) {
     onSubmit: (values) => {
       {
         userUpdateAdmin !== "addNew"
-          ? dispatch(updateUser(values))
+          ? maLoaiNguoiDung === "KhachHang"
+            ? dispatch(updateUser(values))
+            : dispatch(updateUserAdmin(values))
           : dispatch(addUser(values));
       }
       console.log(values);
@@ -166,9 +169,7 @@ function ProfileForm(props) {
         <Form.Item className="mx-auto w-full flex justify-center">
           {userUpdateAdmin === "addNew" ? (
             <Button
-              onClick={() => {
-                onClose();
-              }}
+              onClick={onClose}
               type="primary"
               className="bg-blue-500 "
               htmlType="submit"
@@ -177,9 +178,7 @@ function ProfileForm(props) {
             </Button>
           ) : (
             <Button
-              onClick={() => {
-                onClose();
-              }}
+              onClick={onClose}
               type="primary"
               className="bg-blue-500 "
               htmlType="submit"

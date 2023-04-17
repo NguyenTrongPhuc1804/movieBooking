@@ -122,7 +122,7 @@ function ManagementUser() {
       </p>
       <div className="max-w-[500px] bg-[#1677ff] my-6 rounded-lg mx-auto ">
         <Search
-          placeholder="Tìm người dùng theo tài khoản và họ tên"
+          placeholder="Tìm người dùng theo tên tài khoản "
           allowClear
           enterButton="Search"
           size="large"
