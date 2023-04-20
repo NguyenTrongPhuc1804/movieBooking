@@ -66,9 +66,7 @@ function EditFilm() {
           }
         }
       }
-      for (const value of formData.values()) {
-        console.log(value);
-      }
+      console.log(values);
       dispatch(editUploadFilm(formData));
       navigate("/admin/film");
     },

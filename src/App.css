@@ -231,3 +231,10 @@ body {
   background-color: #000;
   transition: height 0.5s;
 }
+.arrow {
+  color: #fff;
+}
+.arrow-left {
+}
+.arrow-right {
+}

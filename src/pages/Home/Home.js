@@ -118,7 +118,7 @@ function Home() {
           disableOnInteraction: false,
         }}
         spaceBetween={30}
-        // navigation={true}
+        navigation={true}
         pagination={{
           dynamicBullets: true,
         }}
