@@ -16,7 +16,11 @@ import "swiper/css/scrollbar";
 import { useDispatch, useSelector } from "react-redux";
 import { getBanner } from "../../../../redux/reducer/CarouselSlice";
 import { getListFilm } from "../../../../redux/reducer/ManagementFilmSlice";
-
+const arrImg2 = [
+  "https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces/lWqjXgut48IK5f5IRbDBAoO2Epp.jpg",
+  "https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces/wybmSmviUXxlBmX44gtpow5Y9TB.jpg",
+  "https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces/wybmSmviUXxlBmX44gtpow5Y9TB.jpgz",
+];
 function Carousel() {
   const { arrImg } = useSelector((state) => state.CaurouselSlice);
   const dispatch = useDispatch((state) => state.CaurouselSlice);
@@ -51,28 +55,9 @@ function Carousel() {
         modules={[Pagination, Navigation, Autoplay, Grid, EffectFade]}
         className="mySwiper "
       >
-        {arrImg.map((img, idx) => (
-          <SwiperSlide
-            className="  "
-            key={idx}
-            style={
-              {
-                // width: "100%",
-                // height: "100%",
-                // objectFit: "cover",
-                // padding: "0 10px",
-                // backgroundSize: "contain",
-                // backgroundPosition: "center",
-                // backgroundRepeat: "no-repeat",
-                // backgroundImage: `url(${img.hinhAnh})`,
-              }
-            }
-          >
-            <img
-              className=" h-[350px] sm:h-[600px]  w-full"
-              src={img.hinhAnh}
-              alt=""
-            />
+        {arrImg2.map((img, idx) => (
+          <SwiperSlide className="  " key={idx}>
+            <img className=" h-[350px] sm:h-[600px]  w-full" src={img} alt="" />
           </SwiperSlide>
         ))}
       </Swiper>
