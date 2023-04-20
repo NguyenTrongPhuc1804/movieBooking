@@ -17,8 +17,8 @@ function Login() {
   // formik
   const formik = useFormik({
     initialValues: {
-      taiKhoan: "",
-      matKhau: "",
+      taiKhoan: "01Admin123",
+      matKhau: "admin123",
     },
     validationSchema: Yup.object({
       taiKhoan: Yup.string("Require"),

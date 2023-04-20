@@ -5,8 +5,11 @@ import { Outlet } from "react-router-dom";
 function UserTemplate() {
   return (
     <div className="">
-      <section className="gradient-form   bg-neutral-200 dark:bg-neutral-700">
-        <div className="container h-full p-10">
+      <section className="gradient-form  bg-neutral-200 dark:bg-neutral-700">
+        <h1 className="text-4xl text-center pt-3 text-white font-bold">
+          Chúc bạn xem phim vui vẻ !!!
+        </h1>
+        <div className="container  h-full p-10">
           <div className="g-6 flex h-full flex-wrap items-center justify-center text-neutral-800 dark:text-neutral-200">
             <div className="w-full">
               <div className="block rounded-lg bg-white shadow-lg dark:bg-neutral-800">

@@ -16,7 +16,7 @@ function Profile() {
       label: <p className="text-2xl">Thông tin cá nhân</p>,
       children: (
         <div className="w-full">
-          <div className=" bg-[#ECF2FF] w-[70%] mx-auto rounded-lg py-5  ">
+          <div className=" bg-[#ECF2FF] w-full p-2  sm:w-[70%] mx-auto rounded-lg py-5  ">
             <ProfileForm infoUserUpdate={infoUserUpdate} />
           </div>
         </div>
