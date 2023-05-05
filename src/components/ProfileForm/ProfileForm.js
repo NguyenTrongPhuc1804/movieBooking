@@ -17,6 +17,8 @@ function ProfileForm(props) {
   const { maLoaiNguoiDung } = JSON.parse(localStorage.getItem(USER_INFO));
   const userUpdateAdmin = JSON.parse(localStorage.getItem("USER_UPDATE"));
   const { typeUser } = useSelector((state) => state.ManagementUserSlice);
+  console.log(userUpdateAdmin);
+
   const formik = useFormik({
     enableReinitialize: true,
 
@@ -41,6 +43,8 @@ function ProfileForm(props) {
       matKhau: Yup.string().required("Mật khẩu là bắt buộc"),
     }),
     onSubmit: (values) => {
+      console.log(userUpdateAdmin);
+      //kiểm tra quyền user để sửa và thêm user
       {
         userUpdateAdmin !== "addNew"
           ? maLoaiNguoiDung === "KhachHang"
@@ -48,6 +52,7 @@ function ProfileForm(props) {
             : dispatch(updateUserAdmin(values))
           : dispatch(addUser(values));
       }
+
       console.log(values);
     },
   });
@@ -169,7 +174,7 @@ function ProfileForm(props) {
         <Form.Item className="mx-auto w-full flex justify-center">
           {userUpdateAdmin === "addNew" ? (
             <Button
-              onClick={onClose}
+              // onClick={onClose}
               type="primary"
               className="bg-blue-500 "
               htmlType="submit"
@@ -178,7 +183,7 @@ function ProfileForm(props) {
             </Button>
           ) : (
             <Button
-              onClick={onClose}
+              // onClick={onClose}
               type="primary"
               className="bg-blue-500 "
               htmlType="submit"
