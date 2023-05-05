@@ -28,7 +28,7 @@ export default function CardFilmV2(props) {
           {film.tenPhim}
         </h1>
       </div>
-      <div className="px-6 py-4 flex flex-col justify-around">
+      <div className="px-6 py-4 flex flex-col justify-around bg-gray-700">
         <h2 className="text-lg mb-2 font-semibold text-gray-800 dark:text-white ">
           Đánh giá:
         </h2>
